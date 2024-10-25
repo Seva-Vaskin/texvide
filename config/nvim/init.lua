@@ -1,0 +1,52 @@
+-- General settings
+vim.opt.number = true
+vim.opt.autoindent = true
+
+vim.opt.clipboard = 'unnamedplus'
+
+vim.opt.mouse = 'a'
+vim.opt.swapfile = false
+vim.opt.shiftwidth = 2
+vim.opt.whichwrap:append('<,>,h,l,[,]')
+
+vim.opt.spell = true
+vim.opt.spelllang = { 'en', 'ru' }
+
+-- Vim plug
+local Plug = vim.fn['plug#']
+vim.call('plug#begin')
+-- VimTex
+Plug('lervag/vimtex') 
+-- CocSnippets
+Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
+vim.call('plug#end')
+
+
+-- Function to check for backspace
+local function check_backspace()
+  local col = vim.fn.col('.') - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+end
+
+-- Mappings
+vim.api.nvim_set_keymap('i', '<Tab>', [[coc#pum#visible() ? coc#pum#next(1) : v:lua.check_backspace() ? "\<Tab>" : coc#refresh()]], { noremap = true, silent = true, expr = true })
+vim.api.nvim_set_keymap('i', '<S-Tab>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], { noremap = true, silent = true, expr = true })
+vim.api.nvim_set_keymap('i', '<CR>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], { noremap = true, silent = true, expr = true })
+
+-- VimTeX configuration
+vim.g.tex_flavor = 'latex'
+vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_quickfix_mode = 0
+vim.opt.conceallevel = 1
+vim.g.tex_conceal = 'abdmg'
+
+vim.g.auto_save = 0 -- Disable AutoSave
+
+-- UltiSnips configuration
+vim.g.UltiSnipsExpandTrigger = '<c-j>'
+vim.g.UltiSnipsJumpForwardTrigger = '<c-s>'
+vim.g.UltiSnipsJumpBackwardTrigger = '<c-z>'
+vim.g.UltiSnipsSnippetDirectories = { os.getenv('HOME') .. '/.config/nvim/UltiSnips' }
+
+-- Coc-Snippets
+vim.g.coc_snippet_next = '<tab>'
