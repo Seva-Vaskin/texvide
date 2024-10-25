@@ -1,1 +1,1 @@
-# vim_latex_ide
+# TexVIDE
