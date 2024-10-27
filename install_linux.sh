@@ -87,6 +87,9 @@ case "$user_shell" in
     zsh)
         shell_config="$HOME/.zshrc"
         ;;
+    fish)
+        shell_config="fish config"
+        ;;
     *)
         echo "Unsupported shell. Cannot automatically add texvide to the PATH."
         echo "Please add the following line to your shell configuration file manually:"
@@ -95,10 +98,9 @@ case "$user_shell" in
         ;;
 esac
 
-if [ -n "$shell_config" ]; then
-    read -p "Do you want to add $INSTALL_DIR/bin to your PATH by modifying $shell_config? (y/n): " add_to_path
 
-    if [ "$add_to_path" = "y" ] || [ "$add_to_path" = "Y" ]; then
+add_path() {
+    handle_bash_like_env() {
         if ! grep -q "$INSTALL_DIR/bin" "$shell_config"; then
             echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> "$shell_config"
             echo "Added $INSTALL_DIR/bin to PATH in $shell_config"
@@ -106,14 +108,32 @@ if [ -n "$shell_config" ]; then
         else
             echo "$INSTALL_DIR/bin is already in your PATH."
         fi
+    }
+
+    handle_fish_env() {
+        fish -c "fish_add_path -a $INSTALL_DIR/bin"
+    }
+
+    if [ "$shell_config" = "fish config" ]; then
+            handle_fish_env
+        else
+            handle_bash_like_env
+    fi
+}
+
+
+if [ -n "$shell_config" ]; then
+    read -p "Do you want to add $INSTALL_DIR/bin to your PATH by modifying $shell_config? (y/n): " add_to_path
+
+    if [ "$add_to_path" = "y" ] || [ "$add_to_path" = "Y" ]; then
+        add_path
     else
         echo "Skipped adding $INSTALL_DIR/bin to PATH."
         echo "You can manually add it by adding the following line to your shell configuration file:"
         echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
     fi
 else
-    echo "You can manually add texvide to your PATH by adding the following line to your shell configuration file:"
-    echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
+    echo "You can manually add texvide to your PATH"
 fi
 
 echo "Installation complete!"
