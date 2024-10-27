@@ -4,6 +4,7 @@ xhost +local:docker >> /dev/null
 
 docker run \
     --volume="${HOME}:/home" \
+    --volume=$(dirname $0)/../config/:/root/.config \
     --env="DISPLAY" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
     --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \

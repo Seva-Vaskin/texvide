@@ -71,5 +71,9 @@ RUN nvim --headless +CocInstall coc-snippets +qall
 RUN apt-get update && \
     apt-get install -y dbus-x11 libglib2.0-0 zathura
 
+RUN pip install neovim-remote
+
+ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+
 WORKDIR /home
 CMD [ "/bin/bash" ]
