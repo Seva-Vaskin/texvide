@@ -1,4 +1,5 @@
 require('texvide.config')
+require('texvide.colorscheme')
 require('texvide.keymaps')
 require('texvide.plugins')
 require('texvide.ultisnips')
