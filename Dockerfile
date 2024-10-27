@@ -72,7 +72,6 @@ RUN pip install neovim-remote
 COPY ./config/ /root/.config/
 
 RUN nvim --headless +PlugInstall +qall
-RUN nvim --headless +CocInstall coc-snippets +qall
 
 ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
