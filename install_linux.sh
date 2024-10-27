@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Check if running as root
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root"
-    exit 1
-fi
-
 # Get the project directory
 PROJECT_DIR="$(dirname "$0")"
 
@@ -36,8 +30,9 @@ esac
 # Install Docker if not already installed
 echo "Checking Docker installation..."
 if ! command -v docker &> /dev/null; then
-    echo "Docker not found. Installing Docker..."
-    ./install_docker.sh
+    echo "Docker not found. Please install Docker and run this script again."
+    echo "You can install Docker by running: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh"
+    exit 1
 else
     echo "Docker is already installed."
 fi
@@ -46,34 +41,80 @@ fi
 echo "Building Docker image..."
 "$PROJECT_DIR/build_docker.sh"
 
-# Check if /opt/texvide already exists
-if [ -d "/opt/texvide" ]; then
-    read -p "/opt/texvide already exists. Do you want to clean it? (y/n): " clean_opt
+# Set installation directory
+INSTALL_DIR="$HOME/.local/share/texvide"
+
+# Check if installation directory already exists
+if [ -d "$INSTALL_DIR" ]; then
+    read -p "$INSTALL_DIR already exists. Do you want to clean it? (y/n): " clean_opt
     if [ "$clean_opt" = "y" ] || [ "$clean_opt" = "Y" ]; then
-        echo "Cleaning /opt/texvide..."
-        rm -rf /opt/texvide
+        echo "Cleaning $INSTALL_DIR..."
+        rm -rf "$INSTALL_DIR"
     else
         echo "Skipping cleanup. Existing files may be overwritten."
     fi
 fi
 
-# Create directory in /opt
-echo "Creating directory in /opt..."
-mkdir -p /opt/texvide
+# Create installation directory
+echo "Creating installation directory ($INSTALL_DIR)..."
+mkdir -p "$INSTALL_DIR"
 
-# Copy project files to /opt/texvide
-echo "Copying project files..."
-cp -r "$PROJECT_DIR"/* /opt/texvide/
+# Copy project files to installation directory
+echo "Copying project files to $INSTALL_DIR..."
+cp -r "$PROJECT_DIR"/* "$INSTALL_DIR/"
 
 # Create .desktop file
 echo "Creating .desktop file..."
-cat > /usr/share/applications/texvide.desktop << EOL
+mkdir -p "$HOME/.local/share/applications"
+cat > "$HOME/.local/share/applications/texvide.desktop" << EOL
 [Desktop Entry]
 Name=TexVIDE
-Exec=$TERMINAL /opt/texvide/run.sh
-Icon=/opt/texvide/img/logo.svg
+Exec=$TERMINAL $INSTALL_DIR/bin/texvide
+Icon=$INSTALL_DIR/img/logo.svg
 Type=Application
 Categories=Development;
 EOL
 
+# Add texvide/bin to PATH
+echo "Adding $INSTALL_DIR/bin to PATH..."
+# Determine the user's shell
+user_shell=$(basename "$SHELL")
+
+case "$user_shell" in
+    bash)
+        shell_config="$HOME/.bashrc"
+        ;;
+    zsh)
+        shell_config="$HOME/.zshrc"
+        ;;
+    *)
+        echo "Unsupported shell. Cannot automatically add texvide to the PATH."
+        echo "Please add the following line to your shell configuration file manually:"
+        echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
+        shell_config=""
+        ;;
+esac
+
+if [ -n "$shell_config" ]; then
+    read -p "Do you want to add $INSTALL_DIR/bin to your PATH by modifying $shell_config? (y/n): " add_to_path
+
+    if [ "$add_to_path" = "y" ] || [ "$add_to_path" = "Y" ]; then
+        if ! grep -q "$INSTALL_DIR/bin" "$shell_config"; then
+            echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> "$shell_config"
+            echo "Added $INSTALL_DIR/bin to PATH in $shell_config"
+            echo "Please restart your terminal or run 'source $shell_config' for the changes to take effect."
+        else
+            echo "$INSTALL_DIR/bin is already in your PATH."
+        fi
+    else
+        echo "Skipped adding $INSTALL_DIR/bin to PATH."
+        echo "You can manually add it by adding the following line to your shell configuration file:"
+        echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
+    fi
+else
+    echo "You can manually add texvide to your PATH by adding the following line to your shell configuration file:"
+    echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
+fi
+
 echo "Installation complete!"
+echo "You can now run TexVIDE by typing 'texvide' in your terminal or by using the application menu."

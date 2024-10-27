@@ -22,10 +22,19 @@ RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linu
 
 ENV PATH="/opt/nvim-linux64/bin:$PATH"
 
-# Install python dependencies
 # TODO: move
 RUN apt-get install -y \
-    python3-venv
+    python3-venv \
+    xclip \
+    ripgrep \
+    ruby-dev \
+    cpanminus \
+    build-essential \
+    libssl-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    xdotool \
+    locales
 
 RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --upgrade pip \
@@ -43,19 +52,9 @@ RUN mkdir -p ~/.local/share/nvim/site/spell && \
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-COPY ./config/ /root/.config/
-
-RUN nvim --headless +PlugInstall +qall
-
-# Ensure clipbaord synchronization
-# TODO: move
-RUN apt-get install -y xclip ripgrep ruby-dev cpanminus build-essential libssl-dev libreadline-dev zlib1g-dev
-
-
 # Add locale support
-RUN apt-get update && apt-get install -y locales && \
-    locale-gen en_US.UTF-8 && \
-    update-locale LANG=en_US.UTF-8
+RUN locale-gen en_US.UTF-8 \
+    && update-locale LANG=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
@@ -64,9 +63,10 @@ RUN gem install neovim
 RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe
 RUN cpan App::cpanminus
 
+COPY ./config/ /root/.config/
 
-# TODO: move
-RUN apt-get install -y xdotool
+RUN nvim --headless +PlugInstall +qall
+RUN nvim --headless +CocInstall coc-snippets +qall
 
 WORKDIR /home
 CMD [ "/bin/bash" ]
