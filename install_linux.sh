@@ -133,8 +133,7 @@ if [ -n "$shell_config" ]; then
         echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
     fi
 else
-    echo "You can manually add texvide to your PATH by adding the following line to your shell configuration file:"
-    echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\""
+    echo "You can manually add texvide to your PATH"
 fi
 
 echo "Installation complete!"
