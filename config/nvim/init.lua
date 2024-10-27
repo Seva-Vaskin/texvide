@@ -50,3 +50,6 @@ vim.g.UltiSnipsSnippetDirectories = { os.getenv('HOME') .. '/.config/nvim/UltiSn
 
 -- Coc-Snippets
 vim.g.coc_snippet_next = '<tab>'
+
+
+vim.g.perl_host_prog = '/usr/bin/perl'
