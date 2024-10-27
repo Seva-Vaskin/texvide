@@ -63,15 +63,16 @@ RUN gem install neovim
 RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe
 RUN cpan App::cpanminus
 
+# TODO: move
+RUN apt-get update && \
+    apt-get install -y dbus-x11 libglib2.0-0
+
+RUN pip install neovim-remote
+
 COPY ./config/ /root/.config/
 
 RUN nvim --headless +PlugInstall +qall
 RUN nvim --headless +CocInstall coc-snippets +qall
-
-RUN apt-get update && \
-    apt-get install -y dbus-x11 libglib2.0-0 zathura
-
-RUN pip install neovim-remote
 
 ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
