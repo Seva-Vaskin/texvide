@@ -7,5 +7,6 @@ docker run \
     --env="DISPLAY" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
     --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+    --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
     -it texvide
     

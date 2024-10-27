@@ -68,5 +68,8 @@ COPY ./config/ /root/.config/
 RUN nvim --headless +PlugInstall +qall
 RUN nvim --headless +CocInstall coc-snippets +qall
 
+RUN apt-get update && \
+    apt-get install -y dbus-x11 libglib2.0-0 zathura
+
 WORKDIR /home
 CMD [ "/bin/bash" ]
