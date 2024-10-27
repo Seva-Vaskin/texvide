@@ -6,7 +6,7 @@ vim.opt.clipboard = 'unnamedplus'
 
 vim.opt.mouse = 'a'
 vim.opt.swapfile = false
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 vim.opt.whichwrap:append('<,>,h,l,[,]')
 
 vim.opt.spell = true
