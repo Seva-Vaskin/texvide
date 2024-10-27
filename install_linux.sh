@@ -100,7 +100,7 @@ esac
 
 
 add_path() {
-    handle_bash_env() {
+    handle_bash_like_env() {
         if ! grep -q "$INSTALL_DIR/bin" "$shell_config"; then
             echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> "$shell_config"
             echo "Added $INSTALL_DIR/bin to PATH in $shell_config"
@@ -117,7 +117,7 @@ add_path() {
     if [ "$shell_config" = "fish config" ]; then
             handle_fish_env
         else
-            handle_bash_env
+            handle_bash_like_env
     fi
 }
 
