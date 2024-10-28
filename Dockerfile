@@ -26,7 +26,8 @@ RUN apt-get install -y \
     locales \
     dbus-x11 \ 
     libglib2.0-0 \
-    psmisc
+    psmisc \
+    rofi
 
 # Install neovim
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
@@ -48,7 +49,8 @@ RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --upgrade pip \
     && /opt/venv/bin/pip install \
         pynvim \
-        neovim-remote
+        neovim-remote \
+        inkscape-figures
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set env variables required by neovim-remote
@@ -77,5 +79,6 @@ COPY ./config/ /root/.config/
 # Install plugins
 RUN nvim --headless +PlugInstall +qall
 
+COPY ./entrypoint.sh /entrypoint.sh
 WORKDIR /home
-CMD [ "/bin/bash" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
