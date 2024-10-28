@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -60,11 +60,13 @@ RUN locale-gen en_US.UTF-8 \
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# Do we need this?
-# RUN npm install -g neovim
-# RUN gem install neovim
-# RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
-# RUN cpan App::cpanminus
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+RUN npm install -g neovim
+RUN gem install neovim
+RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
+RUN cpan App::cpanminus
 
 # Copy config files
 COPY ./config/ /root/.config/
