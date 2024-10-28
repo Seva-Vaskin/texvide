@@ -27,7 +27,9 @@ RUN apt-get install -y \
     dbus-x11 \ 
     libglib2.0-0 \
     psmisc \
-    rofi
+    rofi \
+    pdf2svg \
+    rxvt-unicode
 
 # Install neovim
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
@@ -50,18 +52,12 @@ RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install \
         pynvim \
         neovim-remote \
-        inkscape-figures
+        inkscape-figures \
+        xlib
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set env variables required by neovim-remote
 ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-
-#### TODO: move
-RUN apt-get install -y \
-    pdf2svg \
-    rxvt-unicode
-
-RUN pip install xlib
 
 # Install inkscape shortcut manager 
 RUN git clone https://github.com/gillescastel/inkscape-shortcut-manager.git /inkscape-shortcut-manager
