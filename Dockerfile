@@ -1,29 +1,18 @@
-FROM ubuntu:24.04
+ARG PLATFORM=linux/amd64
+
+FROM --platform=$PLATFORM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    texlive-full \
+    texlive-full
+
+RUN apt-get install -y \
     zathura \
     inkscape \
     curl \
     git \
-    tar 
-
-# Install Node.js (required by coc.nvim)
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-# Install neovim
-RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
-    && rm -rf /opt/nvim \
-    && tar -C /opt -xzf nvim-linux64.tar.gz \
-    && rm nvim-linux64.tar.gz
-
-ENV PATH="/opt/nvim-linux64/bin:$PATH"
-
-# TODO: move
-RUN apt-get install -y \
+    tar \
     python3-venv \
     xclip \
     ripgrep \
@@ -34,12 +23,36 @@ RUN apt-get install -y \
     libreadline-dev \
     zlib1g-dev \
     xdotool \
-    locales
+    locales \
+    dbus-x11 \ 
+    libglib2.0-0 \
+    psmisc
+
+# Install neovim
+RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
+    && rm -rf /opt/nvim \
+    && tar -C /opt -xzf nvim-linux64.tar.gz \
+    && rm nvim-linux64.tar.gz
+ENV PATH="/opt/nvim-linux64/bin:$PATH"
+
+# Install dependencies
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+RUN npm install -g neovim
+RUN gem install neovim
+RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
+RUN cpan App::cpanminus
 
 RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --upgrade pip \
-    && /opt/venv/bin/pip install pynvim
+    && /opt/venv/bin/pip install \
+        pynvim \
+        neovim-remote
 ENV PATH="/opt/venv/bin:$PATH"
+
+# Set env variables required by neovim-remote
+ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 # Manually download and install Russian spell file for Vim
 RUN mkdir -p ~/.local/share/nvim/site/spell && \
@@ -58,22 +71,11 @@ RUN locale-gen en_US.UTF-8 \
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-RUN npm install -g neovim
-RUN gem install neovim
-RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe
-RUN cpan App::cpanminus
-
-# TODO: move
-RUN apt-get update && \
-    apt-get install -y dbus-x11 libglib2.0-0
-
-RUN pip install neovim-remote
-
+# Copy config files
 COPY ./config/ /root/.config/
 
+# Install plugins
 RUN nvim --headless +PlugInstall +qall
-
-ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 WORKDIR /home
 CMD [ "/bin/bash" ]
