@@ -54,7 +54,7 @@ set highlight-color             "#ffb86c" # Orange
 set highlight-active-color      "#ff79c6" # Pink
 
 #set default-bg                  "#282a36" # default background
-set default-bg                  "#181a26" # Background
+set default-bg                  "#303446" # Background
 set default-fg                  "#f8f8f2" # Foreground
 
 set render-loading              true
