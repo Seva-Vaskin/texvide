@@ -25,7 +25,8 @@ RUN apt-get install -y \
     xdotool \
     locales \
     dbus-x11 \ 
-    libglib2.0-0
+    libglib2.0-0 \
+    psmisc
 
 # Install neovim
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
@@ -34,7 +35,15 @@ RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linu
     && rm nvim-linux64.tar.gz
 ENV PATH="/opt/nvim-linux64/bin:$PATH"
 
-# Install Python packages
+# Install dependencies
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+RUN npm install -g neovim
+RUN gem install neovim
+RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
+RUN cpan App::cpanminus
+
 RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --upgrade pip \
     && /opt/venv/bin/pip install \
@@ -61,14 +70,6 @@ RUN locale-gen en_US.UTF-8 \
     && update-locale LANG=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
-
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-RUN npm install -g neovim
-RUN gem install neovim
-RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
-RUN cpan App::cpanminus
 
 # Copy config files
 COPY ./config/ /root/.config/
