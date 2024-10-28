@@ -1,12 +1,28 @@
 #!/bin/bash
 
-xhost +local:docker >> /dev/null
+OS_TYPE=$(uname)
 
-docker run \
-    --env="DISPLAY" \
-    --volume="${HOME}:/home" \
-    --volume=$(dirname $0)/../config/:/root/.config \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
-    --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-    --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
-    -it texvide
+if [[ "$OS_TYPE" == "Linux" ]]; then
+    xhost +local:docker >> /dev/null
+
+    docker run \
+        --env="DISPLAY" \
+        --volume="${HOME}:/home" \
+        --volume=$(dirname $0)/../config/:/root/.config \
+        --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
+        --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+        --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
+        -it texvide
+elif [[ "$OS_TYPE" == "Darwin" ]]; then
+    xhost + 127.0.0.1
+    
+    docker run \
+        --env="DISPLAY=host.docker.internal:0" \
+        --env="XAUTHORITY=${HOME}/.Xauthority" \
+        --volume="${HOME}:/home" \
+        --volume="$(dirname "$0")/../config/:/root/.config" \
+        --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+        -it texvide:latest
+else
+    echo "Unsupported OS: $OS_TYPE"
+fi
