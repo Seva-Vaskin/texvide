@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # Get the project directory
 PROJECT_DIR="$(dirname "$0")"
 

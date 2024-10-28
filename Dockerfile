@@ -41,7 +41,9 @@ RUN apt-get update && apt-get install -y \
     dbus-x11 \
     libglib2.0-0 \
     psmisc \
-    rofi
+    rofi \
+    pdf2svg \
+    rxvt-unicode
 
 # Install Node.js (LTS version)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
@@ -72,12 +74,15 @@ RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install \
         pynvim \
         neovim-remote \
-        inkscape-figures
-
+        inkscape-figures \
+        xlib
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set environment variables required by neovim-remote
 ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+
+# Install inkscape shortcut manager 
+RUN git clone https://github.com/gillescastel/inkscape-shortcut-manager.git /inkscape-shortcut-manager
 
 # Manually download and install Russian spell files for Vim
 RUN mkdir -p /root/.local/share/nvim/site/spell \
@@ -96,5 +101,6 @@ COPY ./config/ /root/.config/
 # Install Neovim plugins
 RUN nvim --headless +PlugInstall +qall
 
+COPY ./entrypoint.sh /entrypoint.sh
 WORKDIR /home
 ENTRYPOINT [ "/entrypoint.sh" ]

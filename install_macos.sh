@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 # Get the project directory
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -102,7 +102,7 @@ cat > "$APP_DIR/Contents/Info.plist" << EOL
     <key>CFBundleName</key>
     <string>TexVIDE</string>
     <key>CFBundleIconFile</key>
-    <string>logo.icns</string>
+    <string>logo.svg</string>
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>CFBundlePackageType</key>
@@ -116,33 +116,10 @@ EOL
 # Copy the executable script
 cp "$INSTALL_DIR/bin/texvide_launcher.sh" "$APP_DIR/Contents/MacOS/"
 
-# Copy the icon (convert logo.svg to logo.icns if necessary)
-if [ -f "$INSTALL_DIR/img/logo.icns" ]; then
-    cp "$INSTALL_DIR/img/logo.icns" "$APP_DIR/Contents/Resources/"
-else
-    echo "Converting logo.svg to logo.icns..."
-    if ! command -v sips &> /dev/null || ! command -v iconutil &> /dev/null; then
-        echo "Required tools 'sips' and 'iconutil' not found."
-        exit 1
-    fi
-    ICONSET_DIR="$INSTALL_DIR/img/logo.iconset"
-    mkdir "$ICONSET_DIR"
-    sips -z 16 16     "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_16x16.png"
-    sips -z 32 32     "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_16x16@2x.png"
-    sips -z 32 32     "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_32x32.png"
-    sips -z 64 64     "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_32x32@2x.png"
-    sips -z 128 128   "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_128x128.png"
-    sips -z 256 256   "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_128x128@2x.png"
-    sips -z 256 256   "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_256x256.png"
-    sips -z 512 512   "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_256x256@2x.png"
-    sips -z 512 512   "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_512x512.png"
-    sips -z 1024 1024 "$INSTALL_DIR/img/logo.svg" --out "$ICONSET_DIR/icon_512x512@2x.png"
-    iconutil -c icns "$ICONSET_DIR" -o "$APP_DIR/Contents/Resources/logo.icns"
-    rm -rf "$ICONSET_DIR"
-fi
+cp "$INSTALL_DIR/img/logo.icns" "$APP_DIR/Contents/Resources/icon.icns"
 
 # Add texvide/bin to PATH
-echo "Adding $INSTALL_DIR/bin to PATH..."
+echo  
 # Determine the user's shell
 user_shell=$(basename "$SHELL")
 
