@@ -56,6 +56,17 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Set env variables required by neovim-remote
 ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
+#### TODO: move
+RUN apt-get install -y \
+    pdf2svg \
+    rxvt-unicode
+
+RUN pip install xlib
+
+# Install inkscape shortcut manager 
+RUN git clone https://github.com/gillescastel/inkscape-shortcut-manager.git /inkscape-shortcut-manager
+
+
 # Manually download and install Russian spell file for Vim
 RUN mkdir -p ~/.local/share/nvim/site/spell && \
     curl -fLo ~/.local/share/nvim/site/spell/ru.utf-8.spl \
