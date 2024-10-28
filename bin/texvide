@@ -14,7 +14,7 @@ if [[ "$OS_TYPE" == "Linux" ]]; then
         --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
         -it texvide
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
-    xhost + 127.0.0.1
+    xhost + 127.0.0.1 >> /dev/null
     
     docker run \
         --env="DISPLAY=host.docker.internal:0" \

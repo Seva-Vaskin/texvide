@@ -40,7 +40,8 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     dbus-x11 \
     libglib2.0-0 \
-    psmisc
+    psmisc \
+    rofi
 
 # Install Node.js (LTS version)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
@@ -70,7 +71,9 @@ RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --upgrade pip \
     && /opt/venv/bin/pip install \
         pynvim \
-        neovim-remote
+        neovim-remote \
+        inkscape-figures
+
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set environment variables required by neovim-remote
@@ -94,7 +97,4 @@ COPY ./config/ /root/.config/
 RUN nvim --headless +PlugInstall +qall
 
 WORKDIR /home
-CMD [ "/bin/bash" ]
-
-# Set the default command
-CMD [ "/bin/bash" ]т
+ENTRYPOINT [ "/entrypoint.sh" ]
