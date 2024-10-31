@@ -129,12 +129,12 @@ snippet ali "Align" bA
 .\end{align*}
 endsnippet
 
-
 context "math()"
 snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
+context "math()"
 snippet / "Fraction" i
 \\frac{${VISUAL}}{$1}$0
 endsnippet
@@ -206,6 +206,7 @@ snippet == "equals" iA
 &= $1 \\\\
 endsnippet
 
+context "math()"
 snippet != "equals" iA
 \neq 
 endsnippet
@@ -228,35 +229,41 @@ snippet bmat "bmat" iA
 \begin{bmatrix} $1 \end{bmatrix} $0
 endsnippet
 
+snippet ee "emph" w
+\emph{$1} $0
+endsnippet
+
 context "math()"
-snippet () "left( right)" iA
+snippet lr "left( right)" w
 \left( ${1:${VISUAL}} \right) $0
 endsnippet
 
-snippet lr "left( right)" i
+context "math()"
+snippet lr( "left( right)" wA
 \left( ${1:${VISUAL}} \right) $0
 endsnippet
 
-snippet lr( "left( right)" i
-\left( ${1:${VISUAL}} \right) $0
-endsnippet
-
-snippet lr| "left| right|" i
+context "math()"
+snippet lr| "left| right|" wA
 \left| ${1:${VISUAL}} \right| $0
 endsnippet
 
+context "math()"
 snippet lr{ "left\{ right\}" i
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
+context "math()"
 snippet lrb "left\{ right\}" i
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
+context "math()"
 snippet lr[ "left[ right]" i
 \left[ ${1:${VISUAL}} \right] $0
 endsnippet
 
+context "math()"
 snippet lra "leftangle rightangle" iA
 \left<${1:${VISUAL}} \right>$0
 endsnippet
@@ -266,26 +273,32 @@ snippet conj "conjugate" iA
 \overline{$1}$0
 endsnippet
 
-snippet sum "sum" w
-\sum_{n=${1:1}}^{${2:\infty}} ${3:a_n z^n}
+context "math()"
+snippet sum "sum" iA
+\sum_{${1:1}}^{${2}} ${3}
 endsnippet
 
+context "math()"
 snippet taylor "taylor" w
 \sum_{${1:k}=${2:0}}^{${3:\infty}} ${4:c_$1} (x-a)^$1 $0
 endsnippet
 
+context "math()"
 snippet lim "limit" w
 \lim_{${1:n} \to ${2:\infty}} 
 endsnippet
 
+context "math()"
 snippet limsup "limsup" w
 \limsup_{${1:n} \to ${2:\infty}} 
 endsnippet
 
+context "math()"
 snippet prod "product" w
 \prod_{${1:n=${2:1}}}^{${3:\infty}} ${4:${VISUAL}} $0
 endsnippet
 
+context "math()"
 snippet part "d/dx" w
 \frac{\partial ${1:V}}{\partial ${2:x}} $0
 endsnippet
@@ -315,22 +328,32 @@ snippet rd "to the ... power" iA
 ^{($1)}$0
 endsnippet
 
+context "math()"
 snippet __ "subscript" iA
 _{$1}$0
 endsnippet
+context "math()"
+snippet sd "subscript" iA
+_{$1}$0
+endsnippet
 
+
+context "math()"
 snippet ooo "\infty" iA
 \infty
 endsnippet
 
+context "math()"
 snippet rij "mrij" i
 (${1:x}_${2:n})_{${3:$2}\\in${4:\\N}}$0
 endsnippet
 
+context "math()"
 snippet <= "leq" iA
 \le 
 endsnippet
 
+context "math()"
 snippet >= "geq" iA
 \ge 
 endsnippet
@@ -386,6 +409,7 @@ snippet xmm "x" iA
 x_{m}
 endsnippet
 
+context "math()"
 snippet R0+ "R0+" iA
 \\R_0^+
 endsnippet
@@ -417,6 +441,11 @@ snippet mcal "mathcal" iA
 \mathcal{$1}$0
 endsnippet
 
+context "math()"
+snippet mbb "mathbb" iA
+\mathbb{$1}$0
+endsnippet
+
 snippet lll "l" iA
 \ell
 endsnippet
@@ -428,12 +457,12 @@ endsnippet
 
 context "math()"
 snippet xx "cross" iA
-\times 
+\times
 endsnippet
 
 priority 100
 snippet ** "cdot" iA
-\cdot 
+\cdot
 endsnippet
 
 context "math()"
@@ -455,7 +484,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int)' "ln" rwA
+snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -501,6 +530,7 @@ snippet << "<<" iA
 endsnippet
 
 
+context "math()"
 snippet ~~ "~" iA
 \sim 
 endsnippet
@@ -510,9 +540,22 @@ snippet set "set" wA
 \\{$1\\} $0
 endsnippet
 
+context "math()"
+snippet zo "zero one" wA
+\\{0, 1\\}$0
+endsnippet
+
+
+context "math()"
 snippet || "mid" iA
  \mid 
 endsnippet
+
+context "math()"
+snippet :: "colon" iA
+ \colon 
+endsnippet
+
 
 
 context "math()"
@@ -520,6 +563,7 @@ snippet cc "subset" Ai
 \subset 
 endsnippet
 
+context "math()"
 snippet notin "not in " iA
 \not\in 
 endsnippet
@@ -529,46 +573,57 @@ snippet inn "in " iA
 \in 
 endsnippet
 
+context "math()"
 snippet NN "n" iA
 \N
 endsnippet
 
+context "math()"
 snippet Nn "cap" iA
 \cap 
 endsnippet
 
+context "math()"
 snippet UU "cup" iA
 \cup 
 endsnippet
 
+context "math()"
 snippet uuu "bigcup" iA
 \bigcup_{${1:i \in ${2: I}}} $0
 endsnippet
 
+context "math()"
 snippet nnn "bigcap" iA
 \bigcap_{${1:i \in ${2: I}}} $0
 endsnippet
 
+context "math()"
 snippet OO "emptyset" iA
-\O
+\varnothing
 endsnippet
 
+context "math()"
 snippet RR "real" iA
 \R
 endsnippet
 
+context "math()"
 snippet QQ "Q" iA
 \Q
 endsnippet
 
+context "math()"
 snippet ZZ "Z" iA
 \Z
 endsnippet
 
+context "math()"
 snippet <! "normal" iA
 \triangleleft 
 endsnippet
 
+context "math()"
 snippet <> "hokje" iA
 \diamond 
 endsnippet
@@ -630,11 +685,6 @@ snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
-snippet letw "let omega" iA
-Let $\Omega \subset \C$ be open.
-endsnippet
-
-
 snippet HH "H" iA
 \mathbb{H}
 endsnippet
@@ -644,3 +694,125 @@ snippet DD "D" iA
 endsnippet
 
 # vim:ft=snippets
+
+context "math()"
+snippet alpha "alpha" ia
+\alpha
+endsnippet
+
+context "math()"
+snippet beta "beta" iA
+\beta
+endsnippet
+
+context "math()"
+snippet gamma "gamma" iA
+\gamma
+endsnippet
+
+context "math()"
+snippet delta "delta" iA
+\delta
+endsnippet
+
+context "math()"
+snippet eps "epsilon" iA
+\varepsilon
+endsnippet
+
+context "math()"
+snippet theta "theta" iA
+\theta
+endsnippet
+
+context "math()"
+snippet xi "xi" ia
+\xi
+endsnippet
+
+context "math()"
+snippet rho "rho" iA
+\rho
+endsnippet
+
+context "math()"
+snippet lambda "lambda" iA
+\lambda
+endsnippet
+
+context "math()"
+snippet pi "pi" iA
+\pi
+endsnippet
+
+context "math()"
+snippet sigma "sigma" iA
+\sigma
+endsnippet
+
+context "math()"
+snippet phi "phi" iA
+\phi
+endsnippet
+
+context "math()"
+snippet omega "omega" iA
+\omega
+endsnippet
+
+context "math()"
+snippet chi "chi" iA
+\chi
+endsnippet
+
+
+context "math()"
+snippet Alpha "Uppercase Alpha" iA
+\Alpha
+endsnippet
+
+context "math()"
+snippet Beta "Uppercase Beta" iA
+\Beta
+endsnippet
+
+context "math()"
+snippet Gamma "Uppercase Gamma" iA
+\Gamma
+endsnippet
+
+context "math()"
+snippet Delta "Uppercase Delta" iA
+\Delta
+endsnippet
+
+context "math()"
+snippet Theta "Uppercase Theta" iA
+\Theta
+endsnippet
+
+context "math()"
+snippet Lambda "Uppercase Lambda" iA
+\Lambda
+endsnippet
+
+context "math()"
+snippet Pi "Uppercase Pi" iA
+\Pi
+endsnippet
+
+context "math()"
+snippet Sigma "Uppercase Sigma" iA
+\Sigma
+endsnippet
+
+context "math()"
+snippet Phi "Uppercase Phi" iA
+\Phi
+endsnippet
+
+context "math()"
+snippet Omega "Uppercase Omega" iA
+\Omega
+endsnippet
+
