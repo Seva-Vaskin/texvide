@@ -18,3 +18,9 @@ keymap('i', '<C-S-z>', '<C-o><C-r>', opts)
 keymap('n', '<C-q>', ':q<CR>', opts)
 keymap('v', '<C-q>', ':q<CR>', opts)
 keymap('i', '<C-q>', '<C-o>:q<CR>', opts)
+-- Copy
+keymap('v', '<C-c>', '"+y', opts)
+-- Paste
+keymap('n', '<C-v>', '"+p', opts)
+keymap('v', '<C-v>', '"+p', opts)
+keymap('i', '<C-v>', '<C-r>+', opts)
