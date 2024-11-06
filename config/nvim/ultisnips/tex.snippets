@@ -296,7 +296,7 @@ snippet rd "to the ... power" iA
 endsnippet
 
 context "math()"
-snippet _ "subscript" iA
+snippet __ "subscript" iA
 _{$1}$0
 endsnippet
 
@@ -399,13 +399,28 @@ snippet mbb "mathbb" iA
 endsnippet
 
 context "math()"
-snippet "b([a-zA-Z])" "mathbb" riA
+snippet "b([A-Z])" "mathbb" riA
 \mathbb{`!p snip.rv=match.group(1)`}
 endsnippet
 
 context "math()"
 snippet mbf "mathbf" iA
 \mathbf{$1}$0
+endsnippet
+
+context "math()"
+snippet mcal "mathcal" iA
+\mathcal{$1}$0
+endsnippet
+
+context "math()"
+snippet "c([A-Z])" "mathcal" riA
+\mathcal{`!p snip.rv=match.group(1)`}
+endsnippet
+
+context "math()"
+snippet "f([A-Z])" "mathfrak" riA
+\mathfrak{`!p snip.rv=match.group(1)`}
 endsnippet
 
 context "math()"
