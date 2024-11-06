@@ -1,7 +1,7 @@
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true }
 
--- Window movement
+-- Switch windows
 keymap('n', '<c-j>', '<c-w>j', opts)
 keymap('n', '<c-h>', '<c-w>h', opts)
 keymap('n', '<c-k>', '<c-w>k', opts)
@@ -24,3 +24,6 @@ keymap('v', '<C-c>', '"+y', opts)
 keymap('n', '<C-v>', '"+p', opts)
 keymap('v', '<C-v>', '"+p', opts)
 keymap('i', '<C-v>', '<C-r>+', opts)
+-- Indent
+keymap('n', '<C-]>', '>>', opts)
+keymap('n', '<C-[>', '<<', opts)
