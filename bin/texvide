@@ -1,12 +1,44 @@
 #!/bin/bash
 
-xhost +local:docker >> /dev/null
-
-docker run \
-    --env="DISPLAY" \
+container_id=$(docker run \
     --volume="${HOME}:/home" \
     --volume=$(dirname $0)/../config/:/root/.config \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
     --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
     --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
-    -it texvide
+    -d \
+    --rm \
+    -p 5900:5900 \
+    --name texvide \
+    texvide)
+
+echo "Container ID: $container_id"
+
+# Wait for the VNC server to start
+sleep 2
+
+# Connect to the VNC screen
+vncviewer localhost:5900
+
+echo "Exiting..."
+
+# Stop and remove the container when the VNC viewer is closed
+docker stop $container_id
+docker rm $container_id
+
+
+
+# xhost +local:docker >> /dev/null
+
+
+
+
+# docker run \
+    # --env="DISPLAY" \
+    # --volume="${HOME}:/home" \
+    # --volume=$(dirname $0)/../config/:/root/.config \
+    # --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
+    # --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+    # --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
+    # --rm \
+#     -it texvide

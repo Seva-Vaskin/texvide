@@ -29,7 +29,13 @@ RUN apt-get install -y \
     psmisc \
     rofi \
     pdf2svg \
-    rxvt-unicode
+    rxvt-unicode \
+    awesome \
+    xinit \
+    x11vnc \
+    xvfb \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install neovim
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
@@ -85,6 +91,21 @@ COPY ./config/ /root/.config/
 
 # Install plugins
 RUN nvim --headless +PlugInstall +qall
+
+# Set environment variables
+ENV DISPLAY=:1
+
+# Create a startup script
+RUN echo '#!/bin/bash\n\
+Xvfb :1 -screen 0 1920x1080x16 &\n\
+# sleep 2\n\
+x11vnc -display :1 -nopw -forever &\n\
+# sleep 2\n\
+awesome' > /usr/local/bin/startup.sh && \
+chmod +x /usr/local/bin/startup.sh
+
+# Expose VNC port
+EXPOSE 5900
 
 COPY ./entrypoint.sh /entrypoint.sh
 WORKDIR /home
