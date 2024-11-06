@@ -321,49 +321,8 @@ snippet AA "forall" iA
 endsnippet
 
 context "math()"
-snippet xnn "xn" iA
-x_{n}
-endsnippet
-
-context "math()"
-snippet ynn "yn" iA
-y_{n}
-endsnippet
-
-
-context "math()"
-snippet xii "xi" iA
-x_{i}
-endsnippet
-
-context "math()"
-snippet yii "yi" iA
-y_{i}
-endsnippet
-
-context "math()"
-snippet xjj "xj" iA
-x_{j}
-endsnippet
-
-context "math()"
-snippet yjj "yj" iA
-y_{j}
-endsnippet
-
-context "math()"
-snippet xp1 "x" iA
-x_{n+1}
-endsnippet
-
-context "math()"
-snippet xmm "x" iA
-x_{m}
-endsnippet
-
-context "math()"
-snippet R0+ "R0+" iA
-\\R_0^+
+snippet '([A-Za-z])(nn|jj|kk|ii|mm) ' "Transform repeated letters to underscore" rmA
+`!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "} "`
 endsnippet
 
 snippet plot "Plot" w
