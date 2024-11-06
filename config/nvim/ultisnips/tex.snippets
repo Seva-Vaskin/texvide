@@ -463,14 +463,10 @@ snippet \\\ "setminus" iA
 \setminus
 endsnippet
 
-snippet >> ">>" iA
-\gg
+context "math()"
+snippet sem "setminus" iA
+\setminus
 endsnippet
-
-snippet << "<<" iA
-\ll
-endsnippet
-
 
 context "math()"
 snippet ~~ "~" iA
@@ -479,7 +475,7 @@ endsnippet
 
 context "math()"
 snippet set "set" wA
-\\{$1\\} $0
+\\{ $1 \\} $0
 endsnippet
 
 context "math()"
