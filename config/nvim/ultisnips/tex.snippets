@@ -85,7 +85,7 @@ snippet item "Itemize" bA
 \end{itemize}
 endsnippet
 
-snippet desc "Description" b
+snippet desc "Description" bA
 \begin{description}
 	\item[$1] $0
 \end{description}
@@ -103,9 +103,10 @@ snippet =< "implied by" Ai
 \impliedby
 endsnippet
 
+priority 200
 context "math()"
-snippet iff "iff" Ai
-\iff
+snippet '(?<!\\)(iff|lor|land|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
+\\`!p snip.rv = match.group(1)`
 endsnippet
 
 snippet mk "Math" wA
@@ -336,7 +337,7 @@ snippet >= "geq" iA
 endsnippet
 
 context "math()"
-snippet EE "geq" iA
+snippet EE "exist" iA
 \exists 
 endsnippet
 
@@ -441,6 +442,11 @@ snippet norm "norm" iA
 \|$1\|$0
 endsnippet
 
+context "math()"
+snippet abs "abs" iA
+|$1|$0
+endsnippet
+
 priority 100
 context "math()"
 snippet '(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
@@ -529,40 +535,24 @@ snippet inn "in " iA
 \in 
 endsnippet
 
-snippet NN "n" iA
-\N
-endsnippet
-
-snippet Nn "cap" iA
+snippet cap "cap" iA
 \cap 
 endsnippet
 
-snippet UU "cup" iA
+snippet cup "cup" iA
 \cup 
 endsnippet
 
-snippet uuu "bigcup" iA
+snippet Cup "bigcup" iA
 \bigcup_{${1:i \in ${2: I}}} $0
 endsnippet
 
-snippet nnn "bigcap" iA
+snippet Cap "bigcap" iA
 \bigcap_{${1:i \in ${2: I}}} $0
 endsnippet
 
 snippet OO "emptyset" iA
 \O
-endsnippet
-
-snippet RR "real" iA
-\R
-endsnippet
-
-snippet QQ "Q" iA
-\Q
-endsnippet
-
-snippet ZZ "Z" iA
-\Z
 endsnippet
 
 snippet <! "normal" iA
@@ -643,4 +633,54 @@ snippet DD "D" iA
 \mathbb{D}
 endsnippet
 
-# vim:ft=snippets
+context "env('itemize')"
+snippet - "item" biA
+\item
+endsnippet
+
+context "env('enumerate')"
+snippet - "item" biA
+\item
+endsnippet
+
+context "env('description')"
+snippet - "item" biA
+\item[$1] $0
+endsnippet
+
+# Visual snippets
+snippet ub "Underbrace" m
+\\underbrace{ ${VISUAL} }_{ $0 }
+endsnippet
+
+snippet ob "Overbrace" m
+\\overbrace{ ${VISUAL} }^{ $0 }
+endsnippet
+
+snippet os "Overset" m
+\\overset{ $0 }{ ${VISUAL} }
+endsnippet
+
+snippet us "Underset" m
+\\underset{ $0 }{ ${VISUAL} }
+endsnippet
+
+snippet c "Cancel" m
+\\cancel{ ${VISUAL} }
+endsnippet
+
+snippet ct "Cancelto" m
+\\cancelto{ $0 }{ ${VISUAL} }
+endsnippet
+
+snippet b "Bold" m
+\\textbf{ ${VISUAL} }
+endsnippet
+
+snippet i "Italic" m
+\\textit{ ${VISUAL} }
+endsnippet
+
+
+
+
