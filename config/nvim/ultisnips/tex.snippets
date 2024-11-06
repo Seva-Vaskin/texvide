@@ -352,16 +352,6 @@ snippet plot "Plot" w
 endsnippet
 
 context "math()"
-snippet mcal "mathcal" iA
-\mathcal{$1}$0
-endsnippet
-
-context "math()"
-snippet "c([A-Z])" "mathcal" riA
-\mathcal{`!p snip.rv=match.group(1)`}
-endsnippet
-
-context "math()"
 snippet mbb "mathbb" iA
 \mathbb{$1}$0
 endsnippet
@@ -394,6 +384,22 @@ endsnippet
 context "math()"
 snippet mrm "mathrm" iA
 \mathrm{$1}$0
+endsnippet
+
+snippet tbf "textbf" mA
+\textbf{$1}$0
+endsnippet
+
+snippet tit "textit" mA
+\textit{$1}$0
+endsnippet
+
+snippet tsl "textsl" mA
+\textsl{$1}$0
+endsnippet
+
+snippet tsc "textsc" mA
+\textsc{$1}$0
 endsnippet
 
 context "math()"
