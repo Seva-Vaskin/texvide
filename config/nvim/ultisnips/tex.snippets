@@ -109,12 +109,6 @@ snippet =< "implied by" Ai
 \impliedby
 endsnippet
 
-priority 200
-context "math()"
-snippet '(?<!\\)(iff|lor|land|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
-\\`!p snip.rv = match.group(1)`
-endsnippet
-
 snippet mk "Math" wA
 $${1}$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
@@ -436,7 +430,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
+snippet '(?<!\\)(iff|lor|land|supset|cap|cup|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -524,16 +518,6 @@ endsnippet
 context "math()"
 snippet inn "in " iA
 \in 
-endsnippet
-
-context "math()"
-snippet cap "cap" iA
-\cap 
-endsnippet
-
-context "math()"
-snippet cup "cup" iA
-\cup 
 endsnippet
 
 context "math()"
@@ -899,6 +883,7 @@ snippet sl "Slanted" m
 \\textsl{${VISUAL}}
 endsnippet
 
+# Sections
 snippet # "section" bA
 \section{$1}
 $0
