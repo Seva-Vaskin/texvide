@@ -28,6 +28,5 @@ keymap('i', '<C-v>', '<C-r>+', opts)
 keymap('n', '<C-]>', '>>', opts)
 keymap('n', '<C-[>', '<<', opts)
 
-
 -- Language mapping
 vim.opt.langmap = "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
