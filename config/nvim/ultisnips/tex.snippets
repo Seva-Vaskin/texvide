@@ -182,8 +182,13 @@ snippet != "not equals" iA
 endsnippet
 
 context "math()"
-snippet := "equals" iA
+snippet := "coloneqq" iA
 \coloneqq
+endsnippet
+
+context "math()"
+snippet =: "eqqcolon" iA
+\eqqcolon
 endsnippet
 
 context "math()"
@@ -344,8 +349,8 @@ snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|o
 endsnippet
 
 context "math()"
-snippet '_([a-zA-Z])([+\-*/])(\d)' "Subscript Operator and Number" rA
-`!p snip.rv = "_{" + match.group(1) + " " + match.group(2) + " " + match.group(3) + "}"`
+snippet '([_^])([a-zA-Z])([+\-*/])(\d)' "Subscript and Exponent Operator and Number" rA
+`!p snip.rv = match.group(1) + "{" + match.group(2) + " " + match.group(3) + " " + match.group(4) + "}"`
 endsnippet
 
 snippet plot "Plot" w
