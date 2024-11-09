@@ -245,7 +245,7 @@ endsnippet
 
 context "math()"
 snippet sum "sum" iA
-\sum_{${1:1}}^{${2}} ${3}
+\sum_{${1}}^{${2}} ${3}
 endsnippet
 
 context "math()"
@@ -324,7 +324,7 @@ snippet AA "forall" iA
 endsnippet
 
 context "math()"
-snippet '([A-Za-z])(nn|jj|kk|ii|mm) ' "Transform repeated letters to underscore" rmA
+snippet '(\\[a-zA-Z]+|[A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated letters to underscore" rmA
 `!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "} "`
 endsnippet
 
