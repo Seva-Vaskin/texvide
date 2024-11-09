@@ -69,14 +69,13 @@ RUN gem install neovim
 RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
 RUN cpan App::cpanminus
 
-RUN python3 -m venv /opt/venv \
-    && /opt/venv/bin/pip install --upgrade pip \
-    && /opt/venv/bin/pip install \
+RUN pip3 install --upgrade pip \
+    && pip3 install \
         pynvim \
         neovim-remote \
         inkscape-figures \
         xlib
-ENV PATH="/opt/venv/bin:$PATH"
+# ENV PATH="/opt/venv/bin:$PATH"
 
 # Set environment variables required by neovim-remote
 ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
@@ -101,14 +100,12 @@ COPY ./config/ /root/.config/
 # Install Neovim plugins
 RUN nvim --headless +PlugInstall +qall
 
-# ENV NO_AT_BRIDGE=1 
-
-
+# This can be simplified???
 VOLUME /tmp/.X11-unix
 RUN apt update \
- && DEBIAN_FRONTEND=noninteractive apt install -y wget gnupg xvfb x11-xserver-utils python3-pip \
+ && DEBIAN_FRONTEND=noninteractive apt install -y wget gnupg xvfb x11-xserver-utils python3-pip python-is-python3 \
 # pulseaudio lxterminal \
- && pip3 install pyinotify \
+ && pip3 install pyinotify python-uinput \
  && echo "deb [arch=amd64] https://xpra.org/ focal main" > /etc/apt/sources.list.d/xpra.list \
  && wget -q https://xpra.org/gpg.asc -O- | apt-key add - \
  && apt update \
