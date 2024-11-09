@@ -8,21 +8,24 @@ if [[ "$OS_TYPE" == "Linux" ]]; then
     docker run \
         --env="DISPLAY" \
         --volume="${HOME}:/home" \
-        --volume=$(dirname $0)/../config/:/root/.config \
+        --volume="$(dirname "$0")/../config/:/root/.config" \
         --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
         --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
         --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
+        --rm \
         -it texvide
+
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
     xhost + 127.0.0.1 >> /dev/null
-    
+
     docker run \
-        --env="DISPLAY=host.docker.internal:0" \
-        --env="XAUTHORITY=${HOME}/.Xauthority" \
+        --env="DISPLAY=:80" \
         --volume="${HOME}:/home" \
         --volume="$(dirname "$0")/../config/:/root/.config" \
-        --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-        -it texvide:latest
+        -p 8080:8080 \
+        --rm \
+        -it texvide
+
 else
-    echo "Unsupported OS: $OS_TYPE"
+    echo "Unsupported OS: ${OS_TYPE}"
 fi

@@ -101,6 +101,20 @@ COPY ./config/ /root/.config/
 # Install Neovim plugins
 RUN nvim --headless +PlugInstall +qall
 
+# ENV NO_AT_BRIDGE=1 
+
+
+VOLUME /tmp/.X11-unix
+RUN apt update \
+ && DEBIAN_FRONTEND=noninteractive apt install -y wget gnupg xvfb x11-xserver-utils python3-pip \
+# pulseaudio lxterminal \
+ && pip3 install pyinotify \
+ && echo "deb [arch=amd64] https://xpra.org/ focal main" > /etc/apt/sources.list.d/xpra.list \
+ && wget -q https://xpra.org/gpg.asc -O- | apt-key add - \
+ && apt update \
+ && DEBIAN_FRONTEND=noninteractive apt install -y xpra \
+ && mkdir -p /run/user/0/xpra
+
 COPY ./entrypoint.sh /entrypoint.sh
 WORKDIR /home
 ENTRYPOINT [ "/entrypoint.sh" ]
