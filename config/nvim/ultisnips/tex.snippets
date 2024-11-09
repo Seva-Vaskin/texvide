@@ -325,22 +325,27 @@ endsnippet
 
 context "math()"
 snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated symbols to underscore" rmA
-`!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "} "`
+`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + " "`
 endsnippet
 
 context "math()"
 snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated symbols to underscore" rm
-`!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "}"`
+`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + ""`
 endsnippet
 
 context "math()"
 snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ) ' "Transform repeated letters to underscore" rmA
-`!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "} "`
+`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + " "`
 endsnippet
 
 context "math()"
 snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
-`!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "}"`
+`!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
+endsnippet
+
+context "math()"
+snippet '_([a-zA-Z])([+\-*/])(\d)' "Subscript Operator and Number" rA
+`!p snip.rv = "_{" + match.group(1) + " " + match.group(2) + " " + match.group(3) + "}"`
 endsnippet
 
 snippet plot "Plot" w
