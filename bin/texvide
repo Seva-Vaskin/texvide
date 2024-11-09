@@ -16,10 +16,13 @@ if [[ "$OS_TYPE" == "Linux" ]]; then
         -it texvide
 
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
-    xhost + 127.0.0.1 >> /dev/null
+    # xhost + 127.0.0.1 >> /dev/null
 
+    CURRENT_DPI=$(xdpyinfo | awk '/resolution:/ {print $2}' | sed 's/x.*//')
+    echo "Current DPI: ${CURRENT_DPI}"
     docker run \
         --env="DISPLAY=:80" \
+        --env="DPI=${CURRENT_DPI}" \
         --volume="${HOME}:/home" \
         --volume="$(dirname "$0")/../config/:/root/.config" \
         -p 8080:8080 \
