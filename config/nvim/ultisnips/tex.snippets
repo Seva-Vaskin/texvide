@@ -334,12 +334,12 @@ snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|
 endsnippet
 
 context "math()"
-snippet '(?<=[$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ) ' "Transform repeated letters to underscore" rmA
+snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ) ' "Transform repeated letters to underscore" rmA
 `!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "} "`
 endsnippet
 
 context "math()"
-snippet '(?<=[$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
+snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
 `!p snip.rv = match.group(1) + "_{" + match.group(2)[0] + "}"`
 endsnippet
 
@@ -449,6 +449,9 @@ snippet '(?<!\\)(iff|lor|land|supset|cap|cup|arcsin|arccos|arctan|arccot|arccsc|
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
+snippet '(?<!\\)(hfill)' "ln" rwA
+\\`!p snip.rv = match.group(1)`
+endsnippet
 
 priority 100
 context "math()"
