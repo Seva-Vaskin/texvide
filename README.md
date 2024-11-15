@@ -19,6 +19,7 @@
 - Docker
 - Linux operating system
 - [Nerd fonts](https://www.nerdfonts.com/)
+- xhost
 
 ### Installation
 
