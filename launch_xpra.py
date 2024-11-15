@@ -32,11 +32,11 @@ def check_server():
 
 # Function to scale the content
 def on_loaded():
-    js_code = """
-    document.body.style.transform = 'scale(0.5)';
+    js_code = f"""
+    document.body.style.transform = 'scale({1 / SCALING_RATIO})';
     document.body.style.transformOrigin = '0 0';
-    document.body.style.width = '200%';
-    document.body.style.height = '200%';
+    document.body.style.width = '{SCALING_RATIO * 100}%';
+    document.body.style.height = '{SCALING_RATIO * 100}%';
     """
     window.evaluate_js(js_code)
 
