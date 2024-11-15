@@ -45,6 +45,13 @@ RUN apt-get update && apt-get install -y \
     pdf2svg \
     rxvt-unicode
 
+# Install neovim
+RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz \
+    && rm -rf /opt/nvim \
+    && tar -C /opt -xzf nvim-linux64.tar.gz \
+    && rm nvim-linux64.tar.gz
+ENV PATH="/opt/nvim-linux64/bin:$PATH"
+
 # Install Node.js (LTS version)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
