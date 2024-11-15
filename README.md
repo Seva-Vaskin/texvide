@@ -32,6 +32,12 @@ The installation script will:
 3. Create necessary configuration files
 4. Add TexVIDE to your PATH
 
+## OSX installation (In development)
+
+```bash
+brew install python-tk xpra
+```
+
 ## 📖 Documentation
 
 - [🔑 Hotkeys Guide](docs/hotkeys.md)
