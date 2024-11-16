@@ -30,16 +30,6 @@ def check_server():
         # Wait before the next check
         time.sleep(2)
 
-# # Function to scale the content
-# def on_loaded():
-#     js_code = f"""
-#     document.body.style.transform = 'scale({1 / SCALING_RATIO})';
-#     document.body.style.transformOrigin = '0 0';
-#     document.body.style.width = '{SCALING_RATIO * 100}%';
-#     document.body.style.height = '{SCALING_RATIO * 100}%';
-#     """
-#     window.evaluate_js(js_code)
-
 def on_loaded():
     js_code = f"""
     document.body.style.zoom = '{1 / SCALING_RATIO}';
