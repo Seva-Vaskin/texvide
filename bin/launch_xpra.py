@@ -6,7 +6,6 @@ import subprocess
 import re
 import tkinter as tk
 
-
 PORT = 8080
 URL = f'http://localhost:{PORT}/?floating_menu=no'
 SCALING_RATIO = 1
@@ -122,8 +121,8 @@ if __name__ == "__main__":
     SCALING_RATIO = get_scaling_ratio() or SCALING_RATIO
     print(f"Scaling ratio: {SCALING_RATIO}")
 
-    # Create the webview window
-    window = webview.create_window("Zathura", URL)
+    # Create the webview TexVIDE GUI
+    window = webview.create_window("TexVIDE GUI", URL)
 
     # Attach the on_loaded function to the loaded event
     window.events.loaded += on_loaded
