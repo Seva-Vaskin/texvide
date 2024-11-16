@@ -1,43 +1,4 @@
 #!/bin/bash
 
-HOST_OS=$(uname)
-
-cleanup() {
-    if [ ! -z "$XPRA_PID" ]; then
-        kill -9 $XPRA_PID 2>/dev/null
-    fi
-}
-
-# Set up trap for cleanup
-trap cleanup EXIT
-
-if [[ "$HOST_OS" == "Linux" ]]; then
-    xhost +local:docker >> /dev/null
-
-    docker run \
-        --hostname TexVIDE \
-        --env="HOST_OS=${HOST_OS}" \
-        --env="DISPLAY=${DISPLAY}" \
-        --volume="${HOME}:/home" \
-        --volume="$(dirname "$0")/../config/:/root/.config" \
-        --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
-        --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-        --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
-        --rm \
-        -it texvide
-elif [[ "$HOST_OS" == "Darwin" ]]; then
-    "$(dirname "$0")/../venv/bin/python3" "$(dirname "$0")/launch_xpra.py" > /dev/null 2>&1 &
-    XPRA_PID=$!
-
-    docker run \
-        --hostname TexVIDE \
-        --env="HOST_OS=${HOST_OS}" \
-        --env="DISPLAY=:80" \
-        --volume="${HOME}:/home" \
-        --volume="$(dirname "$0")/../config/:/root/.config" \
-        -p 8080:8080 \
-        --rm \
-        -it texvide
-else
-    echo "Unsupported OS: ${HOST_OS}"
-fi
+source "$(dirname "$0")/venv/bin/activate"
+python "$(dirname "$0")/texvide.py"

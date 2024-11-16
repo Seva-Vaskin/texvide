@@ -33,11 +33,30 @@ The installation script will:
 3. Create necessary configuration files
 4. Add TexVIDE to your PATH
 
-## OSX installation (In development)
+## OSX installation (DRAFT)
+
+TODO: one should test and modify the installation script for OSX.
 
 ```bash
 brew install python-tk xpra
 ```
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```
+./build_docker.sh
+```
+
+**Launch TexVIDE**
+```bash
+./bin/texvide
+```
+
+TODO: ideally, one have to use pyinstaller to install TexVIDE as a standalone application.
 
 ## 📖 Documentation
 

@@ -6,6 +6,8 @@ import platform
 import subprocess
 from pathlib import Path
 
+OSX_GUI_PORT = 8080
+
 class TexVIDELauncher:
     def __init__(self):
         self.host_os = platform.system()
@@ -62,7 +64,7 @@ class TexVIDELauncher:
             "--env=DISPLAY=:80",
             f"--volume={os.path.expanduser('~')}:/home",
             f"--volume={self.project_root}/config/:/root/.config",
-            "-p", "8080:8080",
+            "-p", f"{OSX_GUI_PORT}:{OSX_GUI_PORT}",
             "--rm",
             "-it",
             "--name", "texvide",
@@ -72,7 +74,7 @@ class TexVIDELauncher:
 
         # Wait for Docker to start
         print("Waiting for Docker container to start...")
-        if not self.wait_for_port(8080):
+        if not self.wait_for_port(OSX_GUI_PORT):
             print("Error: Docker container failed to start")
             self.cleanup()
             return 1
