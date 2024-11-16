@@ -30,15 +30,70 @@ def check_server():
         # Wait before the next check
         time.sleep(2)
 
-# Function to scale the content
+# # Function to scale the content
+# def on_loaded():
+#     js_code = f"""
+#     document.body.style.transform = 'scale({1 / SCALING_RATIO})';
+#     document.body.style.transformOrigin = '0 0';
+#     document.body.style.width = '{SCALING_RATIO * 100}%';
+#     document.body.style.height = '{SCALING_RATIO * 100}%';
+#     """
+#     window.evaluate_js(js_code)
+
 def on_loaded():
     js_code = f"""
-    document.body.style.transform = 'scale({1 / SCALING_RATIO})';
-    document.body.style.transformOrigin = '0 0';
-    document.body.style.width = '{SCALING_RATIO * 100}%';
-    document.body.style.height = '{SCALING_RATIO * 100}%';
+    document.body.style.zoom = '{1 / SCALING_RATIO}';
+    // document.body.style.transform = 'scale({1 / SCALING_RATIO})';
+    // document.body.style.transformOrigin = '0 0';
+    // document.body.style.width = '{SCALING_RATIO * 100}%';
+    // document.body.style.height = '{SCALING_RATIO * 100}%';
+
+    (function() {{
+        const SCALING_RATIO = {SCALING_RATIO};
+
+        // Store the original addEventListener method
+        const originalAddEventListener = EventTarget.prototype.addEventListener;
+
+        // Override the addEventListener method
+        EventTarget.prototype.addEventListener = function(type, listener, options) {{
+            // Check if the event type is a mouse or pointer event
+            if (type.startsWith('mouse') || type.startsWith('pointer') || type.startsWith('touch') || type.startsWith('hold')) {{
+                // Wrap the original listener
+                const wrappedListener = function(event) {{
+                    // Create a proxy for the event object
+                    const eventProxy = new Proxy(event, {{
+                        get: function(target, prop) {{
+                            // Adjust the x-coordinates
+                            if (prop === 'clientX' || prop === 'pageX' || prop === 'screenX' || prop === 'offsetX' || prop === 'x') {{
+                                return target[prop] * SCALING_RATIO;
+                            }}
+                            // Adjust the y-coordinates
+                            else if (prop === 'clientY' || prop === 'pageY' || prop === 'screenY' || prop === 'offsetY' || prop === 'y') {{
+                                return target[prop] * SCALING_RATIO;
+                            }}
+                            // Return other properties unmodified
+                            else {{
+                                return target[prop];
+                            }}
+                        }}
+                    }});
+
+                    // Call the original listener with the proxy event
+                    listener.call(this, eventProxy);
+                }};
+
+                // Call the original addEventListener with the wrapped listener
+                originalAddEventListener.call(this, type, wrappedListener, options);
+            }} else {{
+                // For other event types, use the original addEventListener
+                originalAddEventListener.call(this, type, listener, options);
+            }}
+        }};
+    }})();
     """
+    # Execute the JavaScript code in the page context
     window.evaluate_js(js_code)
+
 
 def get_screen_resolution():
     root = tk.Tk()
