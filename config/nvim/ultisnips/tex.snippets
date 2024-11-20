@@ -325,7 +325,7 @@ snippet ooo "\infty" iA
 endsnippet
 
 context "math()"
-snippet ast "ast" iA
+snippet '(?<!\\)ast' "ast" riA
 ^{\ast}
 endsnippet
 
@@ -337,16 +337,6 @@ endsnippet
 context "math()"
 snippet AA "forall" iA
 \forall 
-endsnippet
-
-context "math()"
-snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated symbols to underscore" rmA
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + " "`
-endsnippet
-
-context "math()"
-snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated symbols to underscore" rm
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + ""`
 endsnippet
 
 context "math()"
@@ -466,7 +456,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '\b(?<!\\)(iff|lor|land|supset|cap|cup|deg|lim|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
+snippet '\b(?<!\\)(iff|lor|land|supset|cap|cup|deg|mid|cdot|times|lim|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -541,7 +531,7 @@ endsnippet
 
 context "math()"
 snippet || "mid" iA
- \mid 
+\\mid 
 endsnippet
 
 context "math()"
@@ -567,7 +557,7 @@ snippet notin "not in " iA
 endsnippet
 
 context "math()"
-snippet inn "in " iA
+snippet inn "in " wA
 \in 
 endsnippet
 
@@ -634,8 +624,13 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '\b(?<!\\)(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)' "Greek letters" rwA
+snippet '\b(?<!\\)(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)' "Greek letters" rwA
 \\`!p snip.rv = match.group(1)`
+endsnippet
+
+context "math()"
+snippet '\b(?<!\\)phi' "phi" rwA
+\\varphi
 endsnippet
 
 context "math()"
@@ -694,7 +689,7 @@ snippet @z "zeta" iA
 endsnippet
 
 context "math()"
-snippet @t "theta" ia
+snippet @t "theta" iA
 \theta
 endsnippet
 
