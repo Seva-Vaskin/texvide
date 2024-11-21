@@ -1,10 +1,14 @@
 #!/bin/bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
 set -e
 # Get the project directory
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Prompt the user to select a terminal emulator
-echo "Select your preferred terminal emulator:"
+echo "Select your preferred terminal emulator (for TexVIDE better experience with iTerm2):"
 echo "1) Terminal.app"
 echo "2) iTerm2"
 read -p "Enter the number of your choice: " term_choice

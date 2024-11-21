@@ -14,49 +14,16 @@
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- Docker
-- Linux operating system
-- [Nerd fonts](https://www.nerdfonts.com/)
-- xhost
-
 ### Installation
 
-```bash
-./install_linux.sh
-```
+[Linux](docs/linux_installation.md)
 
-The installation script will:
-1. Check for Docker installation
-2. Set up the TexVIDE environment
-3. Create necessary configuration files
-4. Add TexVIDE to your PATH
-
-## OSX installation (DRAFT)
-
-TODO: one should test and modify the installation script for OSX.
-
-```bash
-brew install python-tk xpra
-```
-
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-```
-./build_docker.sh
-```
+[OSX](docs/OSXinstallation.md)
 
 **Launch TexVIDE**
 ```bash
 ./bin/texvide
 ```
-
-TODO: ideally, one have to use pyinstaller to install TexVIDE as a standalone application.
 
 ## 📖 Documentation
 
