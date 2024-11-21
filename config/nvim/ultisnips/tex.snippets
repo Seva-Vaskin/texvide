@@ -176,13 +176,13 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 context "math()"
-snippet == "equals" iA
-&= $1 \\\\
+snippet != "not equals" iA
+\neq 
 endsnippet
 
 context "math()"
-snippet != "not equals" iA
-\neq 
+snippet == "longequal" iA
+\\xlongequal{$1}$0
 endsnippet
 
 context "math()"
@@ -226,7 +226,7 @@ endsnippet
 
 context "math()"
 snippet lr "left( right)" w
-\left( ${1:${VISUAL}} \right) $0
+\\left${1:(} ${2:${VISUAL}} \\right${3:)} $0
 endsnippet
 
 context "math()"
@@ -240,22 +240,17 @@ snippet lr| "left| right|" wA
 endsnippet
 
 context "math()"
-snippet lr{ "left\{ right\}" i
+snippet lr{ "left\{ right\}" wA
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
 context "math()"
-snippet lrb "left\{ right\}" i
-\left\\{ ${1:${VISUAL}} \right\\} $0
-endsnippet
-
-context "math()"
-snippet lr[ "left[ right]" i
+snippet lr[ "left[ right]" wA
 \left[ ${1:${VISUAL}} \right] $0
 endsnippet
 
 context "math()"
-snippet lra "leftangle rightangle" iA
+snippet lra "leftangle rightangle" wA
 \left<${1:${VISUAL}} \right>$0
 endsnippet
 
@@ -340,12 +335,13 @@ snippet AA "forall" iA
 endsnippet
 
 context "math()"
-snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ) ' "Transform repeated letters to underscore" rmA
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + " "`
+snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)([^A-Za-z])' "Transform repeated letters to underscore" rmA
+`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + match.group(3)`
 endsnippet
 
+# (?<=[(\|$\{\.\s])
 context "math()"
-snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
+snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
 `!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
 endsnippet
 
