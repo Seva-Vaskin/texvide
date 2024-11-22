@@ -335,8 +335,13 @@ snippet AA "forall" iA
 endsnippet
 
 context "math()"
-snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)([^A-Za-z])' "Transform repeated letters to underscore" rmA
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + match.group(3)`
+snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rmA
+`!p
+if match.group(1) in ["colone"]:
+	snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
+else:
+	snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
+`
 endsnippet
 
 # (?<=[(\|$\{\.\s])
