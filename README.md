@@ -8,37 +8,71 @@
   
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-Linux-blue.svg)](https://www.linux.org/)
+[![Platform](https://img.shields.io/badge/Platform-OSX-blue.svg)](https://www.apple.com/macos/)
 [![Neovim](https://img.shields.io/badge/Neovim-0.9+-green.svg)](https://neovim.io/)
 
 </div>
 
 ## 🚀 Quick Start
 
+### Supported platforms
+
+- `Linux`
+- `OSX` (unstable)
+
+### Prerequisites
+
+#### Common
+
+- Docker
+- [Nerd fonts](https://www.nerdfonts.com/)
+- Python 3.10+
+
+#### Linux specific prerequisites
+
+- xhost
+
+#### OSX specific prerequisites
+
+- [iTerm2](https://iterm2.com/) (it is highly recommended to use iTerm2 to work with TexVIDE)
+- python-tk (`brew install python-tk`)
+
 ### Installation
 
-[Linux](docs/linux_installation.md)
+1. Install [prerequisites](#prerequisites)
 
-[OSX](docs/osx_installation.md)
+2. Clone the repository:
 
-**Launch TexVIDE**
-```bash
-./bin/texvide
-```
+    ```bash
+    git clone https://github.com/Seva-Vaskin/texvide.git
+    ```
+
+3. Enter the project directory:
+
+    ```bash
+    cd texvide
+    ```
+
+4. Run the installation script:
+
+    ```bash
+    ./install.sh
+    ```
+
+### Notes
+
+The installation script will:
+1. Check for Docker installation
+2. Set up the TexVIDE environment
+3. Create necessary configuration files
+4. Add TexVIDE to your PATH
 
 ## 📖 Documentation
 
+**Note:** documentation is outdated :)
+
 - [🔑 Hotkeys Guide](docs/hotkeys.md)
 - [✂️ Snippets Reference](docs/snippets.md)
-
-## 🛠️ Configuration
-
-TexVIDE is highly configurable through Neovim configuration files. The default configuration provides a balanced setup for LaTeX editing, but you can customize:
-
-- Key bindings
-- Snippets
-- Compilation options
-- PDF viewer
-- Editor appearance
 
 ## 🤝 Contributing
 
