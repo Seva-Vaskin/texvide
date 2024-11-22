@@ -1,12 +1,12 @@
 #!/bin/bash
 
-xhost +local:docker >> /dev/null
+set -e
 
-docker run \
-    --env="DISPLAY" \
-    --volume="${HOME}:/home" \
-    --volume=$(dirname $0)/../config/:/root/.config \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix" \
-    --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-    --volume="/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw" \
-    -it texvide
+# Check if Docker image "texvide" exists
+if ! docker image inspect texvide >/dev/null 2>&1; then
+    echo "Docker image 'texvide' not found. Please build the image and run this script again."
+    exit 1
+fi
+
+
+"$(dirname "$0")/../venv/bin/python3" "$(dirname "$0")/texvide.py"
