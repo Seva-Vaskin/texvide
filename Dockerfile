@@ -100,6 +100,9 @@ COPY ./config/ /root/.config/
 # Install Neovim plugins
 RUN nvim --headless +PlugInstall +qall
 
+# Install ranger
+RUN apt-get install -y ranger caca-utils highlight atool w3m poppler-utils mediainfo
+
 # This can be simplified???
 VOLUME /tmp/.X11-unix
 RUN apt update \

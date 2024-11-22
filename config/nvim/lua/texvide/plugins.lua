@@ -7,4 +7,5 @@ vim.call('plug#begin')
     Plug('preservim/nerdtree') -- Nerdtree
     Plug('ryanoasis/vim-devicons') -- Icons
     Plug('catppuccin/nvim', { ['as'] = 'catppuccin' }) -- theme
+	Plug('mhinz/vim-startify') -- Start screen
 vim.call('plug#end')

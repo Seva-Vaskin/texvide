@@ -6,6 +6,7 @@
 - [Nerd fonts](https://www.nerdfonts.com/)
 - iTerm2 (optional, for better experience)
 - Python 3.10+
+- python-tk (brew install python-tk)
 
 ### Installation
 
