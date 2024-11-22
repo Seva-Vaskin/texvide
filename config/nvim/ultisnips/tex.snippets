@@ -4,6 +4,9 @@ global !p
 def math():
 	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 
+def notmath():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '0'
+
 def comment(): 
 	return vim.eval('vimtex#syntax#in_comment()') == '1'
 
@@ -91,6 +94,7 @@ snippet desc "Description" bA
 \end{description}
 endsnippet
 
+context "notmath()"
 snippet '\$\s*-' "~-" rmA
 \$~-
 endsnippet
@@ -120,12 +124,12 @@ snippet =< "implied by" Ai
 endsnippet
 
 snippet mk "Math" wA
-$${1}$`!p
+$${1:${VISUAL}}$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
 	snip.rv = ' '
 else:
 	snip.rv = ''
-`$2
+`$0
 endsnippet
 
 snippet dm "Math" wA
@@ -182,13 +186,13 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 context "math()"
-snippet == "equals" iA
-&= $1 \\\\
+snippet != "not equals" iA
+\neq 
 endsnippet
 
 context "math()"
-snippet != "not equals" iA
-\neq 
+snippet == "longequal" iA
+\\xlongequal{$1}$0
 endsnippet
 
 context "math()"
@@ -215,6 +219,13 @@ snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
 endsnippet
 
+snippet equation "equation" bA
+\\begin{equation}
+	$1
+	\label{eq:$2}
+\\end{equation} $0
+endsnippet
+
 snippet bmat "bmat" iA
 \begin{bmatrix} $1 \end{bmatrix} $0
 endsnippet
@@ -225,7 +236,7 @@ endsnippet
 
 context "math()"
 snippet lr "left( right)" w
-\left( ${1:${VISUAL}} \right) $0
+\\left${1:(} ${2:${VISUAL}} \\right${3:)} $0
 endsnippet
 
 context "math()"
@@ -239,22 +250,17 @@ snippet lr| "left| right|" wA
 endsnippet
 
 context "math()"
-snippet lr{ "left\{ right\}" i
+snippet lr{ "left\{ right\}" wA
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
 context "math()"
-snippet lrb "left\{ right\}" i
-\left\\{ ${1:${VISUAL}} \right\\} $0
-endsnippet
-
-context "math()"
-snippet lr[ "left[ right]" i
+snippet lr[ "left[ right]" wA
 \left[ ${1:${VISUAL}} \right] $0
 endsnippet
 
 context "math()"
-snippet lra "leftangle rightangle" iA
+snippet lra "leftangle rightangle" wA
 \left<${1:${VISUAL}} \right>$0
 endsnippet
 
@@ -324,7 +330,7 @@ snippet ooo "\infty" iA
 endsnippet
 
 context "math()"
-snippet ast "ast" iA
+snippet '(?<!\\)ast' "ast" riA
 ^{\ast}
 endsnippet
 
@@ -339,22 +345,18 @@ snippet AA "forall" iA
 endsnippet
 
 context "math()"
-snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated symbols to underscore" rmA
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + " "`
+snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rmA
+`!p
+if match.group(1) in ["colone"]:
+	snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
+else:
+	snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
+`
 endsnippet
 
+# (?<=[(\|$\{\.\s])
 context "math()"
-snippet '(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz) ' "Transform repeated symbols to underscore" rm
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + ""`
-endsnippet
-
-context "math()"
-snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ) ' "Transform repeated letters to underscore" rmA
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0] + " "`
-endsnippet
-
-context "math()"
-snippet '(?<=[(\|$\{\.\s])([A-Za-z])(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
+snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
 `!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
 endsnippet
 
@@ -453,7 +455,7 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
+snippet '\b(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -465,7 +467,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '(?<!\\)(iff|lor|land|supset|cap|cup|deg|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
+snippet '\b(?<!\\)(iff|lor|land|supset|cap|cup|deg|mid|cdot|times|lim|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -483,6 +485,18 @@ priority 200
 context "math()"
 snippet <-> "leftrightarrow" iA
 \leftrightarrow
+endsnippet
+
+priority 200
+context "math()"
+snippet x-> "xrightarrow" iA
+\xrightarrow[$1]{$2}$0
+endsnippet
+
+priority 200
+context "math()"
+snippet x=> "xRightarrow" iA
+\xRightarrow[$1]{$2}$0
 endsnippet
 
 context "math()"
@@ -528,7 +542,7 @@ endsnippet
 
 context "math()"
 snippet || "mid" iA
- \mid 
+\\mid 
 endsnippet
 
 context "math()"
@@ -554,7 +568,7 @@ snippet notin "not in " iA
 endsnippet
 
 context "math()"
-snippet inn "in " iA
+snippet inn "in " wA
 \in 
 endsnippet
 
@@ -619,125 +633,15 @@ snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
+priority 100
 context "math()"
-snippet alpha "alpha" ia
-\alpha
+snippet '\b(?<!\\)(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)' "Greek letters" rwA
+\\`!p snip.rv = match.group(1)`
 endsnippet
 
 context "math()"
-snippet beta "beta" iA
-\beta
-endsnippet
-
-context "math()"
-snippet gamma "gamma" iA
-\gamma
-endsnippet
-
-context "math()"
-snippet delta "delta" iA
-\delta
-endsnippet
-
-context "math()"
-snippet eps "epsilon" iA
-\varepsilon
-endsnippet
-
-context "math()"
-snippet theta "theta" iA
-\theta
-endsnippet
-
-context "math()"
-snippet xi "xi" ia
-\xi
-endsnippet
-
-context "math()"
-snippet rho "rho" iA
-\rho
-endsnippet
-
-context "math()"
-snippet lambda "lambda" iA
-\lambda
-endsnippet
-
-context "math()"
-snippet pi "pi" iA
-\pi
-endsnippet
-
-context "math()"
-snippet sigma "sigma" iA
-\sigma
-endsnippet
-
-context "math()"
-snippet phi "phi" iA
-\phi
-endsnippet
-
-context "math()"
-snippet omega "omega" iA
-\omega
-endsnippet
-
-context "math()"
-snippet chi "chi" iA
-\chi
-endsnippet
-
-
-context "math()"
-snippet Alpha "Uppercase Alpha" iA
-\Alpha
-endsnippet
-
-context "math()"
-snippet Beta "Uppercase Beta" iA
-\Beta
-endsnippet
-
-context "math()"
-snippet Gamma "Uppercase Gamma" iA
-\Gamma
-endsnippet
-
-context "math()"
-snippet Delta "Uppercase Delta" iA
-\Delta
-endsnippet
-
-context "math()"
-snippet Theta "Uppercase Theta" iA
-\Theta
-endsnippet
-
-context "math()"
-snippet Lambda "Uppercase Lambda" iA
-\Lambda
-endsnippet
-
-context "math()"
-snippet Pi "Uppercase Pi" iA
-\Pi
-endsnippet
-
-context "math()"
-snippet Sigma "Uppercase Sigma" iA
-\Sigma
-endsnippet
-
-context "math()"
-snippet Phi "Uppercase Phi" iA
-\Phi
-endsnippet
-
-context "math()"
-snippet Omega "Uppercase Omega" iA
-\Omega
+snippet '\b(?<!\\)phi' "phi" rwA
+\\varphi
 endsnippet
 
 context "math()"
@@ -796,7 +700,7 @@ snippet @z "zeta" iA
 endsnippet
 
 context "math()"
-snippet @t "theta" ia
+snippet @t "theta" iA
 \theta
 endsnippet
 
