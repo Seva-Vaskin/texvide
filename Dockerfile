@@ -115,6 +115,6 @@ RUN apt update \
  && DEBIAN_FRONTEND=noninteractive apt install -y xpra \
  && mkdir -p /run/user/0/xpra
 
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./launch/entrypoint.sh /entrypoint.sh
 WORKDIR /home
 ENTRYPOINT [ "/entrypoint.sh" ]
