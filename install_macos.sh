@@ -1,7 +1,4 @@
 #!/bin/bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
 
 set -e
 # Get the project directory
@@ -65,6 +62,11 @@ mkdir -p "$INSTALL_DIR"
 # Copy project files to installation directory
 echo "Copying project files to $INSTALL_DIR..."
 cp -r "$PROJECT_DIR"/* "$INSTALL_DIR/"
+
+# Install python venv
+python3 -m venv "$INSTALL_DIR/venv"
+source "$INSTALL_DIR/venv/bin/activate"
+pip3 install -r "$$INSTALL_DIR/requirements.txt"
 
 # Create the application launcher script
 echo "Creating application launcher..."
