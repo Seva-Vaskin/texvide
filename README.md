@@ -18,7 +18,7 @@
 
 [Linux](docs/linux_installation.md)
 
-[OSX](docs/OSXinstallation.md)
+[OSX](docs/osx_installation.md)
 
 **Launch TexVIDE**
 ```bash

@@ -9,9 +9,21 @@
 
 ### Installation
 
-```bash
-./install_linux.sh
-```
+1. Install [prerequisites](#prerequisites)
+
+2. Clone the repository:
+
+    ```bash
+    git clone https://github.com/Seva-Vaskin/texvide.git
+    ```
+
+3. Run the installation script:
+
+    ```bash
+    ./install_linux.sh
+    ```
+
+### Notes
 
 The installation script will:
 1. Check for Docker installation

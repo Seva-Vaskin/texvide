@@ -2,7 +2,7 @@
 
 set -e
 # Get the project directory
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR=$(dirname "$0")
 
 # Prompt the user to select a terminal emulator
 echo "Select your preferred terminal emulator (for TexVIDE better experience with iTerm2):"
