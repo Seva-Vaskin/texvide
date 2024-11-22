@@ -64,8 +64,8 @@ echo "Copying project files to $INSTALL_DIR..."
 cp -r "$PROJECT_DIR"/* "$INSTALL_DIR/"
 
 # Install python venv
-python3 -m venv "$INSTALL_DIR/venv"
-source "$INSTALL_DIR/venv/bin/activate"
+python3 -m venv "$INSTALL_DIR/bin/venv"
+source "$INSTALL_DIR/bin/venv/bin/activate"
 pip3 install -r "$$INSTALL_DIR/requirements.txt"
 
 # Create the application launcher script
