@@ -17,3 +17,4 @@ vim.cmd([[
     autocmd User Startified silent! execute 'NERDTree'
   augroup END
 ]])
+
