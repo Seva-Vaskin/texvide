@@ -1,5 +1,3 @@
-# Inspired by: https://github.com/gillescastel/latex-snippets/blob/master/tex.snippets
-
 global !p
 def math():
 	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
@@ -16,82 +14,9 @@ def env(name):
 
 endglobal
 
-
-snippet template "Basic template" b
-\documentclass[a4paper]{article}
-
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{textcomp}
-\usepackage[dutch]{babel}
-\usepackage{amsmath, amssymb}
-
-
-% figure support
-\usepackage{import}
-\usepackage{xifthen}
-\pdfminorversion=7
-\usepackage{pdfpages}
-\usepackage{transparent}
-\newcommand{\incfig}[1]{%
-	\def\svgwidth{\columnwidth}
-	\import{./figures/}{#1.pdf_tex}
-}
-
-\pdfsuppresswarningpagegroup=1
-
-\begin{document}
-	$0
-\end{document}
-endsnippet
-
-snippet beg "begin{} / end{}" bA
-\\begin{$1}
-	$0
-\\end{$1}
-endsnippet
-
 priority 100
 snippet ... "ldots" iA
 \ldots
-endsnippet
-
-snippet table "Table environment" b
-\begin{table}[${1:htpb}]
-	\centering
-	\caption{${2:caption}}
-	\label{tab:${3:label}}
-	\begin{tabular}{${5:c}}
-	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
-	\end{tabular}
-\end{table}
-endsnippet
-
-snippet fig "Figure environment" b
-\begin{figure}[${1:htpb}]
-	\centering
-	${2:\includegraphics[width=0.8\textwidth]{$3}}
-	\caption{${4:$3}}
-	\label{fig:${5:${3/\W+/-/g}}}
-\end{figure}
-endsnippet
-
-snippet enum "Enumerate" bA
-\begin{enumerate}
-	\item $0
-\end{enumerate}
-endsnippet
-
-snippet item "Itemize" bA
-\begin{itemize}
-	\item $0
-\end{itemize}
-endsnippet
-
-snippet desc "Description" bA
-\begin{description}
-	\item[$1] $0
-\end{description}
 endsnippet
 
 context "notmath()"
@@ -121,27 +46,6 @@ endsnippet
 context "math()"
 snippet =< "implied by" Ai
 \impliedby
-endsnippet
-
-snippet mk "Math" wA
-$${1:${VISUAL}}$`!p
-if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
-	snip.rv = ' '
-else:
-	snip.rv = ''
-`$0
-endsnippet
-
-snippet dm "Math" wA
-\[
-${1:${VISUAL}}
-.\] $0
-endsnippet
-
-snippet align "Align" bA
-\begin{align*}
-	${1:${VISUAL}}
-.\end{align*}
 endsnippet
 
 context "math()"
@@ -213,21 +117,6 @@ endsnippet
 context "math()"
 snippet floor "floor" iA
 \left\lfloor $1 \right\rfloor$0
-endsnippet
-
-snippet pmat "pmat" iA
-\begin{pmatrix} $1 \end{pmatrix} $0
-endsnippet
-
-snippet equation "equation" bA
-\\begin{equation}
-	$1
-	\label{eq:$2}
-\\end{equation} $0
-endsnippet
-
-snippet bmat "bmat" iA
-\begin{bmatrix} $1 \end{bmatrix} $0
 endsnippet
 
 snippet ee "emph" w
@@ -354,7 +243,6 @@ else:
 `
 endsnippet
 
-# (?<=[(\|$\{\.\s])
 context "math()"
 snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
 `!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
@@ -782,73 +670,6 @@ endsnippet
 context "env('description')"
 snippet - "item" biA
 \item[$1] $0
-endsnippet
-
-# Visual snippets
-snippet ub "Underbrace" w
-\\underbrace{ ${VISUAL} }_{ $0 }
-endsnippet
-
-snippet ob "Overbrace" w
-\\overbrace{ ${VISUAL} }^{ $0 }
-endsnippet
-
-snippet os "Overset" w
-\\overset{ $0 }{ ${VISUAL} }
-endsnippet
-
-snippet us "Underset" w
-\\underset{ $0 }{ ${VISUAL} }
-endsnippet
-
-snippet c "Cancel" w
-\\cancel{ ${VISUAL} }
-endsnippet
-
-snippet ct "Cancelto" w
-\\cancelto{ $0 }{ ${VISUAL} }
-endsnippet
-
-snippet bf "Bold" w
-\\textbf{${VISUAL}}
-endsnippet
-
-snippet it "Italic" w
-\\textit{${VISUAL}}
-endsnippet
-
-snippet sc "Small caps" w
-\\textsc{${VISUAL}}
-endsnippet
-
-snippet sl "Slanted" w
-\\textsl{${VISUAL}}
-endsnippet
-
-# Sections
-snippet # "section" bA
-\section{$1}
-$0
-endsnippet
-
-snippet ## "subsection" bA
-\subsection{$1}
-$0
-endsnippet
-
-snippet ### "subsubsection" bA
-\subsubsection{$1}
-$0
-endsnippet
-
-snippet ##### "paragraph" bA
-\paragraph{$1}
-$0
-endsnippet
-
-snippet ###### "subparagraph" bA
-\subparagraph{$1}
-$0
 endsnippet
 
 

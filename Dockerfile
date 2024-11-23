@@ -56,7 +56,8 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     xvfb \
     x11-xserver-utils \
-    xpra 
+    xpra \
+    libxkbfile-dev
 
 # Install Node.js (LTS version)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
@@ -103,6 +104,15 @@ RUN mkdir -p /root/.local/share/nvim/site/spell \
 RUN curl -fLo "/root/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+# Install XKB-Switch
+RUN git clone https://github.com/sergei-mironov/xkb-switch.git /tmp/xkb-switch \
+    && cd /tmp/xkb-switch \
+    && mkdir build && cd build \
+    && cmake .. \
+    && make \
+    && make install \
+    && rm -rf /tmp/xkb-switch
+
 # Copy config files
 COPY ./config/ /root/.config/
 
@@ -115,5 +125,6 @@ RUN mkdir -p /run/user/0/xpra
 COPY ./launch/entrypoint.sh /entrypoint.sh
 WORKDIR /home
 RUN echo "source /root/.config/env_config.sh" >> /root/.bashrc
+RUN ldconfig
 
 ENTRYPOINT [ "/entrypoint.sh" ]
