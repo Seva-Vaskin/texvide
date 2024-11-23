@@ -7,7 +7,7 @@ import re
 import tkinter as tk
 
 PORT = 8080
-URL = f'http://localhost:{PORT}/?floating_menu=no'
+URL = f'http://localhost:{PORT}/?floating_menu=no&swap_keys=no&clipboard=yes'
 SCALING_RATIO = 1
 
 def check_server():
@@ -23,6 +23,7 @@ def check_server():
             else:
                 print('Server returned an unexpected status code:', response.status_code)
                 server_was_down = True
+                
         except requests.ConnectionError:
             print('Server is unavailable.')
             server_was_down = True
@@ -37,47 +38,28 @@ def on_loaded():
     // document.body.style.width = '{SCALING_RATIO * 100}%';
     // document.body.style.height = '{SCALING_RATIO * 100}%';
 
-    (function() {{
-        const SCALING_RATIO = {SCALING_RATIO};
+        (function() {{
+      const propertiesToAdjust = [
+        'clientX', 'clientY',
+        'pageX', 'pageY',
+        'screenX', 'screenY',
+        'offsetX', 'offsetY',
+        'x', 'y'
+      ];
 
-        // Store the original addEventListener method
-        const originalAddEventListener = EventTarget.prototype.addEventListener;
-
-        // Override the addEventListener method
-        EventTarget.prototype.addEventListener = function(type, listener, options) {{
-            // Check if the event type is a mouse or pointer event
-            if (type.startsWith('mouse') || type.startsWith('pointer') || type.startsWith('touch') || type.startsWith('hold')) {{
-                // Wrap the original listener
-                const wrappedListener = function(event) {{
-                    // Create a proxy for the event object
-                    const eventProxy = new Proxy(event, {{
-                        get: function(target, prop) {{
-                            // Adjust the x-coordinates
-                            if (prop === 'clientX' || prop === 'pageX' || prop === 'screenX' || prop === 'offsetX' || prop === 'x') {{
-                                return target[prop] * SCALING_RATIO;
-                            }}
-                            // Adjust the y-coordinates
-                            else if (prop === 'clientY' || prop === 'pageY' || prop === 'screenY' || prop === 'offsetY' || prop === 'y') {{
-                                return target[prop] * SCALING_RATIO;
-                            }}
-                            // Return other properties unmodified
-                            else {{
-                                return target[prop];
-                            }}
-                        }}
-                    }});
-
-                    // Call the original listener with the proxy event
-                    listener.call(this, eventProxy);
-                }};
-
-                // Call the original addEventListener with the wrapped listener
-                originalAddEventListener.call(this, type, wrappedListener, options);
-            }} else {{
-                // For other event types, use the original addEventListener
-                originalAddEventListener.call(this, type, listener, options);
-            }}
-        }};
+      propertiesToAdjust.forEach(function(prop) {{
+        const descriptor = Object.getOwnPropertyDescriptor(MouseEvent.prototype, prop);
+        if (descriptor && descriptor.get) {{
+          const originalGetter = descriptor.get;
+          Object.defineProperty(MouseEvent.prototype, prop, {{
+            get: function() {{
+              return originalGetter.call(this) * 2;
+            }},
+            configurable: true,
+            enumerable: true
+          }});
+        }}
+      }});
     }})();
     """
     # Execute the JavaScript code in the page context
