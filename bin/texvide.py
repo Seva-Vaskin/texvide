@@ -4,16 +4,18 @@ import time
 import signal
 import platform
 import subprocess
+import argparse
 from pathlib import Path
 
 OSX_GUI_PORT = 8080
 
 class TexVIDELauncher:
-    def __init__(self):
+    def __init__(self, log_file=None):
         self.host_os = platform.system()
         self.docker_process = None
         self.xpra_process = None
         self.project_root = Path(__file__).parent.parent
+        self.log_file = open(log_file, 'w') if log_file else subprocess.DEVNULL
         
         # Set up signal handlers
         signal.signal(signal.SIGINT, self.cleanup)
@@ -23,8 +25,8 @@ class TexVIDELauncher:
         """Start Docker container for Linux"""
         # Enable X11 forwarding
         subprocess.run(["xhost", "+local:docker"], 
-                      stdout=subprocess.DEVNULL, 
-                      stderr=subprocess.DEVNULL)
+                      stdout=self.log_file, 
+                      stderr=self.log_file)
 
         cmd = [
             "docker", "run",
@@ -53,8 +55,7 @@ class TexVIDELauncher:
         self.xpra_process = subprocess.Popen([
             sys.executable,
             str(launch_script)
-        ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
+        ], stdout=self.log_file, stderr=self.log_file)
 
         # Start Docker container
         cmd = [
@@ -123,8 +124,8 @@ class TexVIDELauncher:
             try:
                 subprocess.run(["docker", "stop", "texvide"], 
                              timeout=10,
-                             stdout=subprocess.DEVNULL, 
-                             stderr=subprocess.DEVNULL)
+                             stdout=self.log_file, 
+                             stderr=self.log_file)
             except subprocess.TimeoutExpired:
                 print("Docker container stop timed out, forcing...")
             
@@ -134,6 +135,10 @@ class TexVIDELauncher:
                 self.docker_process.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 self.docker_process.kill()
+
+        # Close log file if it was opened
+        if self.log_file != subprocess.DEVNULL:
+            self.log_file.close()
 
         sys.exit(0)
 
@@ -155,7 +160,11 @@ class TexVIDELauncher:
             self.cleanup()
 
 def main():
-    launcher = TexVIDELauncher()
+    parser = argparse.ArgumentParser(description='TexVIDE Launcher')
+    parser.add_argument('--log', type=str, help='Path to log file')
+    args = parser.parse_args()
+
+    launcher = TexVIDELauncher(log_file=args.log)
     sys.exit(launcher.run())
 
 if __name__ == "__main__":

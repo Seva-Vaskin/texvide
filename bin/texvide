@@ -9,4 +9,4 @@ if ! docker image inspect texvide >/dev/null 2>&1; then
 fi
 
 
-"$(dirname "$0")/../venv/bin/python3" "$(dirname "$0")/texvide.py"
+"$(dirname "$0")/../venv/bin/python3" "$(dirname "$0")/texvide.py" "$@"
