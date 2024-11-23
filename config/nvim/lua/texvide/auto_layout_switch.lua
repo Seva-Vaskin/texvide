@@ -21,18 +21,17 @@ local previous_zone = is_in_mathzone()
 -- Function to check and switch layouts based on math zone
 local function check_and_switch_layout()
     local in_mathzone = is_in_mathzone()
-    local current_layout = check_layout()
 
     if in_mathzone ~= previous_zone then
         if in_mathzone == 1 then
             -- Entered math zone
-            if current_layout ~= "us" then
+            if check_layout() ~= "us" then
                 switch_layout("us")
                 vim.notify("Switched to US layout", vim.log.levels.INFO)
             end
         else
             -- Exited math zone
-            if current_layout == "us" then
+            if check_layout() == "us" then
                 switch_layout(remembered_layout)
                 vim.notify("Switched to remembered layout: " .. remembered_layout, vim.log.levels.INFO)
             end
@@ -40,7 +39,7 @@ local function check_and_switch_layout()
     end
     if in_mathzone == 0 then
         -- Not in math zone, update remembered_layout
-        remembered_layout = current_layout
+        remembered_layout = check_layout()
     end
     previous_zone = in_mathzone
 end
