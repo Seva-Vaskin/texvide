@@ -16,7 +16,7 @@ map D toggle_page_mode
 map r reload
 map R rotate
 
-#set adjust-open width 
+set adjust-open width 
 #set window-height 1440
 #set window-width 2560
 map <Left> navigate previous
