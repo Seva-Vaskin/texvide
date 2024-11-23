@@ -8,4 +8,7 @@ vim.call('plug#begin')
     Plug('ryanoasis/vim-devicons') -- Icons
     Plug('catppuccin/nvim', { ['as'] = 'catppuccin' }) -- theme
 	Plug('mhinz/vim-startify') -- Start screen
+	Plug('tpope/vim-fugitive') -- Git wrapper
+	Plug('airblade/vim-gitgutter') -- Shows git diff lines
+
 vim.call('plug#end')
