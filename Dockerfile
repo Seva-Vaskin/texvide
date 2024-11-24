@@ -106,6 +106,8 @@ RUN git clone --recursive https://github.com/sharkov63/sakls.git /tmp/sakls \
     && cp lib/libSAKLS.so /usr/lib/libSAKLS.so \
     && rm -rf /tmp/sakls
 
+RUN ldconfig
+
 ARG USER=user
 RUN useradd -ms /bin/bash $USER
 RUN usermod -aG sudo $USER
