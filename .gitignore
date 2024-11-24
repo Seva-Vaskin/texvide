@@ -3,4 +3,5 @@ __pycache__/
 config/inkscape-figures/roots
 config/inkscape-figures/template.svg
 config/inkscape/*
+config/xpra
 
