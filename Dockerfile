@@ -132,7 +132,7 @@ RUN git clone --recursive https://github.com/sharkov63/sakls.git /tmp/sakls \
 COPY ./config/ /root/.config/
 
 # Install Neovim plugins
-RUN nvim --headless +PlugInstall +qall
+RUN nvim -u /root/.config/nvim/lua/texvide/plugins.lua --headless +PlugInstall +qall
 
 # Configure Xpra
 RUN mkdir -p /run/user/0/xpra

@@ -11,13 +11,4 @@ vim.call('plug#begin')
 	Plug('tpope/vim-fugitive') -- Git wrapper
 	Plug('airblade/vim-gitgutter') -- Shows git diff lines
     Plug('sharkov63/sakls.nvim') -- Syntax-Aware Keyboard Layout Switching 
-
 vim.call('plug#end')
-
-local sakls = require 'sakls'
-sakls.init {
-  sakls_lib = {
-    path = '/usr/lib/libSAKLS.so',
-  },
-  layout_backend = 'xkb-switch',
-}
