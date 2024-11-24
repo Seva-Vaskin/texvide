@@ -15,6 +15,9 @@ ENV LANG=en_US.UTF-8 \
 
 # Update and install dependencies
 RUN apt-get update && apt-get install -y \
+    texlive-full
+
+RUN apt-get install -y \
     build-essential \
     cmake \
     git \
@@ -32,7 +35,6 @@ RUN apt-get update && apt-get install -y \
     cpanminus \
     zathura \
     inkscape \
-    texlive-full \
     xclip \
     ripgrep \
     xdotool \
@@ -57,7 +59,8 @@ RUN apt-get update && apt-get install -y \
     xvfb \
     x11-xserver-utils \
     xpra \
-    libxkbfile-dev
+    libxkbfile-dev \
+    libboost-all-dev
 
 # Install Node.js (LTS version)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
@@ -104,7 +107,7 @@ RUN mkdir -p /root/.local/share/nvim/site/spell \
 RUN curl -fLo "/root/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Install XKB-Switch
+# Install XKB-Switch (required for SALKS)
 RUN git clone https://github.com/sergei-mironov/xkb-switch.git /tmp/xkb-switch \
     && cd /tmp/xkb-switch \
     && mkdir build && cd build \
@@ -112,6 +115,18 @@ RUN git clone https://github.com/sergei-mironov/xkb-switch.git /tmp/xkb-switch \
     && make \
     && make install \
     && rm -rf /tmp/xkb-switch
+
+# Install SALKS
+RUN git clone --recursive https://github.com/sharkov63/sakls.git /tmp/sakls \
+    && cd /tmp/sakls \
+    && mkdir build && cd build \
+    && cmake \
+        -DCMAKE_CXX_FLAGS="-Wno-error=unused-variable" \
+        -DSAKLS_ENABLE_LAYOUT_BACKENDS="xkb-switch" \
+        .. \
+    && make -j \
+    && cp lib/libSAKLS.so /usr/lib/libSAKLS.so \
+    && rm -rf /tmp/sakls
 
 # Copy config files
 COPY ./config/ /root/.config/
