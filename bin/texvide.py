@@ -65,6 +65,7 @@ class TexVIDELauncher:
             "--env=DISPLAY=:80",
             f"--volume={os.path.expanduser('~')}:/home",
             f"--volume={self.project_root}/config/:/root/.config",
+            f"--volume={self.project_root}/fluxbox:/root/.fluxbox",
             "-p", f"{OSX_GUI_PORT}:{OSX_GUI_PORT}",
             "--rm",
             "-it",

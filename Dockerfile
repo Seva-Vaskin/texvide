@@ -112,6 +112,8 @@ RUN nvim --headless +PlugInstall +qall
 # Configure Xpra
 RUN mkdir -p /run/user/0/xpra
 
+RUN apt-get install -y fluxbox kitty
+
 COPY ./launch/entrypoint.sh /entrypoint.sh
 WORKDIR /home
 RUN echo "source /root/.config/env_config.sh" >> /root/.bashrc

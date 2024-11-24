@@ -1,0 +1,6 @@
+[begin] (fluxbox)
+[include] (/etc/X11/fluxbox/fluxbox-menu)
+[submenu] (Backgrounds)
+  [wallpapers] (~/.fluxbox/backgrounds)
+[end]
+

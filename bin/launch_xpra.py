@@ -33,12 +33,8 @@ def check_server():
 def on_loaded():
     js_code = f"""
     document.body.style.zoom = '{1 / SCALING_RATIO}';
-    // document.body.style.transform = 'scale({1 / SCALING_RATIO})';
-    // document.body.style.transformOrigin = '0 0';
-    // document.body.style.width = '{SCALING_RATIO * 100}%';
-    // document.body.style.height = '{SCALING_RATIO * 100}%';
 
-        (function() {{
+    (function() {{
       const propertiesToAdjust = [
         'clientX', 'clientY',
         'pageX', 'pageY',
