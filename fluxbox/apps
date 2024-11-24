@@ -2,3 +2,14 @@
   [Position]	(WINCENTER)	{0 0}
   [Layer]	{2}
 [end]
+
+[app] (class=kitty)
+  [Dimensions]  {50% 100%}
+  [Position]    (UPPERLEFT) {0% 0%}
+[end]
+
+[app] (class=Zathura)
+  [Dimensions]  {50% 100%}
+  [Position]    (UPPERLEFT) {50% 0%}
+[end]
+
