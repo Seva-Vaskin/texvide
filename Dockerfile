@@ -59,7 +59,8 @@ RUN apt-get install -y \
     xvfb \
     x11-xserver-utils \
     xpra \
-    libxkbfile-dev
+    libxkbfile-dev \
+    libboost-all-dev
 
 # Install Node.js (LTS version)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
@@ -84,7 +85,7 @@ RUN cpan App::cpanminus
 # Configure Xpra
 RUN mkdir -p /run/user/0/xpra
 
-# Install XKB-Switch
+# Install XKB-Switch (required for SALKS)
 RUN git clone https://github.com/sergei-mironov/xkb-switch.git /tmp/xkb-switch \
     && cd /tmp/xkb-switch \
     && mkdir build && cd build \
@@ -92,6 +93,20 @@ RUN git clone https://github.com/sergei-mironov/xkb-switch.git /tmp/xkb-switch \
     && make \
     && make install \
     && rm -rf /tmp/xkb-switch
+
+# Install SALKS
+RUN git clone --recursive https://github.com/sharkov63/sakls.git /tmp/sakls \
+    && cd /tmp/sakls \
+    && mkdir build && cd build \
+    && cmake \
+        -DCMAKE_CXX_FLAGS="-Wno-error=unused-variable" \
+        -DSAKLS_ENABLE_LAYOUT_BACKENDS="xkb-switch" \
+        .. \
+    && make -j \
+    && cp lib/libSAKLS.so /usr/lib/libSAKLS.so \
+    && rm -rf /tmp/sakls
+
+RUN ldconfig
 
 ARG USER=user
 RUN useradd -ms /bin/bash $USER
@@ -133,7 +148,7 @@ RUN curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim \
 COPY ./config/ $HOME/.config/
 
 # Install Neovim plugins
-RUN nvim --headless +PlugInstall +qall
+RUN nvim -u ${HOME}/.config/nvim/lua/texvide/plugins.lua --headless +PlugInstall +qall
 
 COPY ./launch/entrypoint.sh /entrypoint.sh
 RUN echo "source $HOME/.config/env_config.sh" >> $HOME/.bashrc
