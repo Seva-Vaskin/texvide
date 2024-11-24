@@ -15,6 +15,9 @@ ENV LANG=en_US.UTF-8 \
 
 # Update and install dependencies
 RUN apt-get update && apt-get install -y \
+    texlive-full
+
+RUN apt-get install -y \
     build-essential \
     cmake \
     git \
@@ -32,7 +35,6 @@ RUN apt-get update && apt-get install -y \
     cpanminus \
     zathura \
     inkscape \
-    texlive-full \
     xclip \
     ripgrep \
     xdotool \
