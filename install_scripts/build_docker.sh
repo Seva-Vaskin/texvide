@@ -18,4 +18,5 @@ fi
 # Build Docker image
 echo "Building Docker image..."
 
-docker build -t texvide "$PROJECT_DIR"
+docker build -t texvide \
+    "$PROJECT_DIR"

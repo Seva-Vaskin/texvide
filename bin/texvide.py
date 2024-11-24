@@ -17,6 +17,30 @@ class TexVIDELauncher:
         self.project_root = Path(__file__).parent.parent
         self.log_file = open(log_file, 'w') if log_file else subprocess.DEVNULL
         
+        self.common_docker_args = [
+            "--hostname", "TexVIDE",
+            "--rm",
+            "-it",
+            "--name", "texvide",
+            f"--volume={os.path.expanduser('~')}:/userdata",
+            f"--volume={self.project_root}/config/:/home/user/.config",
+        ]
+
+        self.linux_docker_args = [
+            f"--env=DISPLAY={os.environ.get('DISPLAY')}",
+            "--env=HOST_OS=Linux",
+            f"--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+            f"--volume={os.path.expanduser('~')}/.Xauthority:/home/user/.Xauthority:rw",
+            "--volume=/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw",
+        ]
+
+        self.macos_docker_args = [
+            "--env=HOST_OS=Darwin",
+            "--env=DISPLAY=:80",
+            "-p", f"{OSX_GUI_PORT}:{OSX_GUI_PORT}",
+        ]
+
+
         # Set up signal handlers
         signal.signal(signal.SIGINT, self.cleanup)
         signal.signal(signal.SIGTERM, self.cleanup)
@@ -30,17 +54,8 @@ class TexVIDELauncher:
 
         cmd = [
             "docker", "run",
-            "--hostname", "TexVIDE",
-            "--env=HOST_OS=Linux",
-            "--env=DISPLAY",
-            f"--volume={os.path.expanduser('~')}:/home",
-            f"--volume={self.project_root}/config/:/root/.config",
-            "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
-            f"--volume={os.path.expanduser('~')}/.Xauthority:/root/.Xauthority:rw",
-            "--volume=/run/user/1000/at-spi/bus_0:/run/user/1000/at-spi/bus_0:rw",
-            "--rm",
-            "-it",
-            "--name", "texvide",
+            *self.common_docker_args,
+            *self.linux_docker_args,
             "texvide"
         ]
         self.docker_process = subprocess.Popen(cmd)
@@ -60,15 +75,8 @@ class TexVIDELauncher:
         # Start Docker container
         cmd = [
             "docker", "run",
-            "--hostname", "TexVIDE",
-            "--env=HOST_OS=Darwin",
-            "--env=DISPLAY=:80",
-            f"--volume={os.path.expanduser('~')}:/home",
-            f"--volume={self.project_root}/config/:/root/.config",
-            "-p", f"{OSX_GUI_PORT}:{OSX_GUI_PORT}",
-            "--rm",
-            "-it",
-            "--name", "texvide",
+            *self.common_docker_args,
+            *self.macos_docker_args,
             "texvide"
         ]
         self.docker_process = subprocess.Popen(cmd)

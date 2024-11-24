@@ -74,14 +74,6 @@ RUN git clone https://github.com/neovim/neovim.git /tmp/neovim \
     && make install \
     && rm -rf /tmp/neovim
 
-# Install Python support for Neovim
-RUN pip3 install --upgrade pip \
-    && pip3 install \
-        pynvim \
-        neovim-remote \
-        inkscape-figures \
-        xlib
-
 # Install Node.js support for Neovim
 RUN npm install -g neovim
 
@@ -90,22 +82,8 @@ RUN gem install neovim
 RUN cpanm --force Neovim::Ext IO::Async MsgPack::Raw Eval::Safe 
 RUN cpan App::cpanminus
 
-# Set environment variables required by neovim-remote
-ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-
-# Install inkscape shortcut manager 
-RUN git clone https://github.com/gillescastel/inkscape-shortcut-manager.git /inkscape-shortcut-manager
-
-# Manually download and install Russian spell files for Vim
-RUN mkdir -p /root/.local/share/nvim/site/spell \
-    && curl -fLo /root/.local/share/nvim/site/spell/ru.utf-8.spl \
-        http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl \
-    && curl -fLo /root/.local/share/nvim/site/spell/ru.utf-8.sug \
-        http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug
-
-# Install Vim-Plug
-RUN curl -fLo "/root/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Configure Xpra
+RUN mkdir -p /run/user/0/xpra
 
 # Install XKB-Switch (required for SALKS)
 RUN git clone https://github.com/sergei-mironov/xkb-switch.git /tmp/xkb-switch \
@@ -128,18 +106,50 @@ RUN git clone --recursive https://github.com/sharkov63/sakls.git /tmp/sakls \
     && cp lib/libSAKLS.so /usr/lib/libSAKLS.so \
     && rm -rf /tmp/sakls
 
+ARG USER=user
+RUN useradd -ms /bin/bash $USER
+RUN usermod -aG sudo $USER
+
+# Switch to the new user
+USER $USER
+ENV HOME=/home/$USER
+WORKDIR $HOME
+
+# Install Python support for Neovim
+RUN pip3 install --upgrade pip \
+    && pip3 install \
+        pynvim \
+        neovim-remote \
+        inkscape-figures \
+        xlib
+ENV PATH=${HOME}/.local/bin/:${PATH}
+
+# Set environment variables required by neovim-remote
+ENV NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+
+# Install inkscape shortcut manager 
+RUN git clone https://github.com/gillescastel/inkscape-shortcut-manager.git $HOME/.local/share/inkscape-shortcut-manager
+
+# Manually download and install Russian spell files for Vim
+RUN mkdir -p $HOME/.local/share/nvim/site/spell \
+    && curl -fLo $HOME/.local/share/nvim/site/spell/ru.utf-8.spl \
+        http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl \
+    && curl -fLo $HOME/.local/share/nvim/site/spell/ru.utf-8.sug \
+        http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug
+
+# Install Vim-Plug
+RUN mkdir -p $HOME/.local/share/nvim/site/autoload
+RUN curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 # Copy config files
-COPY ./config/ /root/.config/
+COPY ./config/ $HOME/.config/
 
 # Install Neovim plugins
-RUN nvim -u /root/.config/nvim/lua/texvide/plugins.lua --headless +PlugInstall +qall
-
-# Configure Xpra
-RUN mkdir -p /run/user/0/xpra
+RUN nvim -u ${HOME}/.config/nvim/lua/texvide/plugins.lua --headless +PlugInstall +qall
 
 COPY ./launch/entrypoint.sh /entrypoint.sh
-WORKDIR /home
-RUN echo "source /root/.config/env_config.sh" >> /root/.bashrc
-RUN ldconfig
+RUN echo "source $HOME/.config/env_config.sh" >> $HOME/.bashrc
 
+WORKDIR /userdata
 ENTRYPOINT [ "/entrypoint.sh" ]
