@@ -334,8 +334,13 @@ handle_mime() {
 }
 
 handle_fallback() {
-    echo '----- File Type Classification -----' && file --dereference --brief -- "${FILE_PATH}" && exit 5
-    exit 1
+    if [ -r "${FILE_PATH}" ]; then
+        case "$(file --mime-type -Lb "${FILE_PATH}")" in
+            text/* | */xml | */json | */csv | */html)
+                cat -n 100 "${FILE_PATH}" && exit 0
+                ;;
+        esac
+    fi
 }
 
 
