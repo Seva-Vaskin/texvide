@@ -1,0 +1,132 @@
+global !p
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+endglobal
+
+priority 100
+context "math()"
+snippet '\b(?<!\\)(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega)' "Greek letters" rwA
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+context "math()"
+snippet '\b(?<!\\)phi' "phi" rwA
+\\varphi
+endsnippet
+
+context "math()"
+snippet @a "alpha" iA
+\alpha
+endsnippet
+
+context "math()"
+snippet @b "beta" iA
+\beta
+endsnippet
+
+context "math()"
+snippet @g "gamma" iA
+\gamma
+endsnippet
+
+context "math()"
+snippet @G "Gamma" iA
+\Gamma
+endsnippet
+
+context "math()"
+snippet @d "delta" iA
+\delta
+endsnippet
+
+context "math()"
+snippet @D "Delta" iA
+\Delta
+endsnippet
+
+context "math()"
+snippet @e "varepsilon" iA
+\varepsilon
+endsnippet
+
+context "math()"
+snippet :e "epsilon" iA
+\epsilon
+endsnippet
+
+context "math()"
+snippet @z "zeta" iA
+\zeta
+endsnippet
+
+context "math()"
+snippet @t "theta" iA
+\theta
+endsnippet
+
+context "math()"
+snippet @T "Theta" iA
+\Theta
+endsnippet
+
+context "math()"
+snippet @i "iota" iA
+\iota
+endsnippet
+
+context "math()"
+snippet @k "kappa" iA
+\kappa
+endsnippet
+
+context "math()"
+snippet @l "lambda" iA
+\lambda
+endsnippet
+
+context "math()"
+snippet @L "Lambda" iA
+\Lambda
+endsnippet
+
+context "math()"
+snippet @s "sigma" iA
+\sigma
+endsnippet
+
+context "math()"
+snippet @S "Sigma" iA
+\Sigma
+endsnippet
+
+context "math()"
+snippet @u "upsilon" iA
+\upsilon
+endsnippet
+
+context "math()"
+snippet @U "Upsilon" iA
+\Upsilon
+endsnippet
+
+context "math()"
+snippet @o "omega" iA
+\omega
+endsnippet
+
+context "math()"
+snippet @O "Omega" iA
+\Omega
+endsnippet
+
+context "math()"
+snippet ome "omega" iA
+\omega
+endsnippet
+
+context "math()"
+snippet Ome "Omega" iA
+\Omega
+endsnippet
+

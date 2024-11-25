@@ -1,0 +1,35 @@
+global !p
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+endglobal
+
+context "math()"
+snippet lr( "left( right)" wA
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+context "math()"
+snippet lr| "left| right|" wA
+\left| ${1:${VISUAL}} \right| $0
+endsnippet
+
+context "math()"
+snippet lr{ "left\{ right\}" wA
+\left\\{ ${1:${VISUAL}} \right\\} $0
+endsnippet
+
+context "math()"
+snippet lr[ "left[ right]" wA
+\left[ ${1:${VISUAL}} \right] $0
+endsnippet
+
+context "math()"
+snippet lra "leftangle rightangle" wA
+\left<${1:${VISUAL}} \right>$0
+endsnippet
+
+context "math()"
+snippet r| "right|" wA
+\left. ${1:${VISUAL}} \right|$0
+endsnippet
