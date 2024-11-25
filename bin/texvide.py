@@ -23,6 +23,7 @@ class TexVIDELauncher:
             "-it",
             "--name", "texvide",
             f"--volume={os.path.expanduser('~')}:/userdata",
+            f"--volume={os.path.expanduser('~')}/.local/state/nvim:/home/user/.local/state/nvim",
             f"--volume={self.project_root}/config/:/home/user/.config",
         ]
 
