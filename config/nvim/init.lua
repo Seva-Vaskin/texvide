@@ -3,6 +3,8 @@ require('texvide.colorscheme')
 require('texvide.keymaps')
 require('texvide.plugins')
 require('texvide.features')
+require('texvide.advanced_snippets')
+
 require('texvide.plugin-settings.ultisnips')
 require('texvide.plugin-settings.vimtex')
 require('texvide.plugin-settings.inkscape_figures')
