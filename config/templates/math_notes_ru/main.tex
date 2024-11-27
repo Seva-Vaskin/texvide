@@ -1,0 +1,105 @@
+\documentclass[a4paper,14pt]{extarticle}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{extarrows}
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage{systeme,mathtools}
+\usepackage{indentfirst}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{breqn}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{bbm}
+\lstset{
+    basicstyle=\ttfamily,
+    mathescape
+}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{transparent}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{cancel}
+\graphicspath{{figures/}}
+\usepackage{float}
+\setlength {\marginparwidth }{2cm}
+\usepackage[color=red!20, textwidth=25mm, colorinlistoftodos]{todonotes}
+\newcommand{\donetodo}[2][]{\todo[color=green,#1]{#2}}
+\usepackage{cleveref}
+\pgfplotsset{compat=1.16}
+
+\pdfsuppresswarningpagegroup=1
+\tolerance=1000
+\emergencystretch=1em
+
+\DeclareRobustCommand{\divby}{%
+    \mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
+}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\newtheorem{statement}{Утверждение}
+\crefname{statement}{утверждение}{утверждения}
+\Crefname{statement}{Утверждение}{Утверждения}
+\newtheorem{corollary}{Следствие}
+\newtheorem{theorem}{Теорема}
+\newtheorem{application}{Приложение}
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}
+
+\newtheorem{example}{Пример}
+\newtheorem{lemma}{Лемма}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+\newtheorem*{exercise}{Упражнение}
+\newtheorem{suggestion}{Предложение}
+\Crefname{suggestion}{Предложение}{Предложения}
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+\DeclareMathOperator{\Def}{def}
+\DeclareMathOperator{\Part}{Part}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Bound}{Bound}
+\newcommand{\why}{{\color{purple}(why?)}}
+\newcommand{\pict}{{\color{purple}Picture!}}
+
+\begin{document}
+    \title{TITLE}
+    \author{AUTHOR}
+    \date{}
+    \maketitle
+    \newpage
+
+    \tableofcontents
+    \newpage
+
+    \import{sections/}{01.tex}
+\end{document}
+
