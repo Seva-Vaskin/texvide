@@ -211,10 +211,11 @@ endsnippet
 context "math()"
 snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rmA
 `!p
-if match.group(1) in ["colone"]:
-	snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
+text = match.group(1) + match.group(2) * 2
+if text in ["coloneqq","iff"]:
+ snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
 else:
-	snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
+ snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
 `
 endsnippet
 
@@ -341,7 +342,7 @@ endsnippet
 priority 100
 context "math()"
 snippet -> "to" iA
-\to 
+\to
 endsnippet
 
 priority 200
@@ -471,6 +472,19 @@ snippet cases "cases" wA
 	$1
 \end{cases}
 endsnippet
+
+priority 10
+context "math()"
+snippet "til" "tilde" riA
+\tilde{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z])bar" "bar" riA
+\tilde{`!p snip.rv=match.group(1)`}
+endsnippet
+
 
 priority 10
 context "math()"
