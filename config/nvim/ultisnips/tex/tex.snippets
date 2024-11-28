@@ -211,10 +211,11 @@ endsnippet
 context "math()"
 snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rmA
 `!p
-if match.group(1) in ["colone"]:
-	snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
+text = match.group(1) + match.group(2) * 2
+if text in ["coloneqq","iff"]:
+ snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
 else:
-	snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
+ snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
 `
 endsnippet
 
