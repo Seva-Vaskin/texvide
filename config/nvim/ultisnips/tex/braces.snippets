@@ -6,22 +6,22 @@ endglobal
 
 context "math()"
 snippet lr( "left( right)" wA
-\left( ${1:${VISUAL}} \right) $0
+\left( ${1:${VISUAL}} \right)$0
 endsnippet
 
 context "math()"
 snippet lr| "left| right|" wA
-\left| ${1:${VISUAL}} \right| $0
+\left| ${1:${VISUAL}} \right|$0
 endsnippet
 
 context "math()"
 snippet lr{ "left\{ right\}" wA
-\left\\{ ${1:${VISUAL}} \right\\} $0
+\left\\{ ${1:${VISUAL}} \right\\}$0
 endsnippet
 
 context "math()"
 snippet lr[ "left[ right]" wA
-\left[ ${1:${VISUAL}} \right] $0
+\left[ ${1:${VISUAL}} \right]$0
 endsnippet
 
 context "math()"
@@ -32,4 +32,14 @@ endsnippet
 context "math()"
 snippet r| "right|" wA
 \left. ${1:${VISUAL}} \right|$0
+endsnippet
+
+context "math()"
+snippet ceil "ceil" iA
+\left\lceil ${1:${VISUAL}} \right\rceil$0
+endsnippet
+
+context "math()"
+snippet floor "floor" iA
+\left\lfloor ${1:${VISUAL}} \right\rfloor$0
 endsnippet
