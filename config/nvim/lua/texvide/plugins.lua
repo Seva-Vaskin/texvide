@@ -11,4 +11,5 @@ vim.call('plug#begin')
 	Plug('tpope/vim-fugitive') -- Git wrapper
 	Plug('airblade/vim-gitgutter') -- Shows git diff lines
     Plug('sharkov63/sakls.nvim') -- Syntax-Aware Keyboard Layout Switching 
+    Plug('windwp/nvim-autopairs') -- Automaticall match braces
 vim.call('plug#end')

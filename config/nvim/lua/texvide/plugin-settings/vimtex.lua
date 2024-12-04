@@ -6,3 +6,4 @@ vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.vimtex_quickfix_mode = 0
 vim.opt.conceallevel = 1
 vim.g.tex_conceal = 'abdmg'
+vim.g.vimtex_complete_enabled = 1

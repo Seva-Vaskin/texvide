@@ -98,7 +98,7 @@ snippet '(?<!\\)ast' "ast" riA
 endsnippet
 
 context "math()"
-snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rmA
+snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rA
 `!p
 text = match.group(1) + match.group(2) * 2
 if text in ["coloneqq","iff"]:
@@ -269,7 +269,7 @@ _\text{$1} $0
 endsnippet
 
 context "math()"
-snippet tt "text" iA
+snippet tt "text" wA
 \text{$1}$0
 endsnippet
 
@@ -282,7 +282,7 @@ endsnippet
 
 priority 10
 context "math()"
-snippet "til" "tilde" riA
+snippet "til" "tilde" wA
 \tilde{$1}$0
 endsnippet
 
@@ -295,7 +295,7 @@ endsnippet
 
 priority 10
 context "math()"
-snippet "bar" "bar" riA
+snippet "bar" "bar" wA
 \overline{$1}$0
 endsnippet
 
@@ -307,13 +307,13 @@ endsnippet
 
 priority 10
 context "math()"
-snippet "hat" "hat" riA
+snippet "hat" "hat" wA
 \hat{$1}$0
 endsnippet
 
 priority 100
 context "math()"
-snippet "([a-zA-Z])hat" "hat" riA
+snippet "\b([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
