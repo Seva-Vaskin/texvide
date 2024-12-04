@@ -109,6 +109,16 @@ else:
 endsnippet
 
 context "math()"
+snippet "\\xii" "Enable back x_i" riA
+x_i
+endsnippet
+
+context "math()"
+snippet "x_ii" "Enable back \xi_i" riA
+\xi_i
+endsnippet
+
+context "math()"
 snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
 `!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
 endsnippet
@@ -351,5 +361,13 @@ endsnippet
 context "env('align')"
 snippet tb "tab" wA
 &
+endsnippet
+
+snippet TODO "todo" w
+\todo[inline]{ $1 }$0
+endsnippet
+
+snippet todo "todo" w
+\todo{ $1 }$0
 endsnippet
 
