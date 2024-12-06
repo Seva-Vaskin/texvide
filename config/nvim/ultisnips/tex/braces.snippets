@@ -1,7 +1,6 @@
 global !p
 def math():
 	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
-
 endglobal
 
 context "math()"
@@ -26,7 +25,7 @@ endsnippet
 
 context "math()"
 snippet lr< "leftangle rightangle" wA
-\left<${1:${VISUAL}} \right>$0
+\left< ${1:${VISUAL}} \right>$0
 endsnippet
 
 context "math()"

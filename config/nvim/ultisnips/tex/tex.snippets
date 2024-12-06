@@ -11,7 +11,6 @@ def comment():
 def env(name):
 	[x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
 	return x != '0' and y != '0'
-
 endglobal
 
 priority 100
@@ -24,10 +23,6 @@ snippet '\$\s*-' "~-" rmA
 \$~-
 endsnippet
 
-snippet pac "Package" b
-\usepackage[${1:options}]{${2:package}}$0
-endsnippet
-
 context "math()"
 snippet '([A-Za-z])(\d)' "auto subscript" wrA
 `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
@@ -38,28 +33,14 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
 endsnippet
 
-snippet ee "emph" w
-\emph{$1} $0
+context "math()"
+snippet "\\(cup|cap|bigcup|bigcap|bigwedge|bigvee|bigoplus|bigotimes|bigsqcup|biguplus)" "expand" ir
+\\`!p snip.rv = match.group(1)`_{$1} $0
 endsnippet
 
 context "math()"
-snippet sum "sum" iA
-\sum_{${1}}^{${2}} ${3}
-endsnippet
-
-context "math()"
-snippet taylor "taylor" w
-\sum_{${1:k}=${2:0}}^{${3:\infty}} ${4:c_$1} (x-a)^$1 $0
-endsnippet
-
-context "math()"
-snippet prod "product" w
-\prod_{${1:n=${2:1}}}^{${3:\infty}} ${4:${VISUAL}} $0
-endsnippet
-
-context "math()"
-snippet part "d/dx" w
-\frac{\partial ${1:V}}{\partial ${2:x}} $0
+snippet "\\(sum|prod|int)" "expand" ir
+\\`!p snip.rv = match.group(1)`_{$1}^{$2} $0
 endsnippet
 
 context "math()"
@@ -94,7 +75,7 @@ endsnippet
 
 context "math()"
 snippet '(?<!\\)ast' "ast" riA
-^{\ast}
+^{*}
 endsnippet
 
 priority -1
@@ -110,6 +91,11 @@ else:
 endsnippet
 
 context "math()"
+snippet '([A-Za-z]+)([A-Za-z])\2' "Transform repeated letters to underscore" rm
+`!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
+endsnippet
+
+context "math()"
 snippet "\\xii" "Enable back x_i" riA
 x_i
 endsnippet
@@ -120,35 +106,8 @@ snippet "x_ii" "Enable back \xi_i" riA
 endsnippet
 
 context "math()"
-snippet '([A-Za-z]+)(aa|bb|cc|dd|ee|ff|gg|hh|ii|jj|kk|ll|mm|nn|oo|pp|qq|rr|ss|tt|uu|vv|ww|xx|yy|zz|AA|BB|CC|DD|EE|FF|GG|HH|II|JJ|KK|LL|MM|NN|OO|PP|QQ|RR|SS|TT|UU|VV|WW|XX|YY|ZZ)' "Transform repeated letters to underscore" rm
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
-endsnippet
-
-context "math()"
 snippet '([_^])([a-zA-Z])([+\-*/])(\d)' "Subscript and Exponent Operator and Number" rA
 `!p snip.rv = match.group(1) + "{" + match.group(2) + " " + match.group(3) + " " + match.group(4) + "}"`
-endsnippet
-
-snippet plot "Plot" w
-\begin{figure}[$1]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			xmin= ${2:-10}, xmax= ${3:10},
-			ymin= ${4:-10}, ymax = ${5:10},
-			axis lines = middle,
-		]
-			\addplot[domain=$2:$3, samples=${6:100}]{$7};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{$8}
-	\label{${9:$8}}
-\end{figure}
-endsnippet
-
-context "math()"
-snippet mbb "mathbb" iA
-\mathbb{$1}$0
 endsnippet
 
 context "math()"
@@ -157,13 +116,13 @@ snippet "b([A-Z])" "mathbb" riA
 endsnippet
 
 context "math()"
-snippet mbf "mathbf" iA
-\mathbf{$1}$0
+snippet mrm "mathrm" iA
+\mathrm{$1}$0
 endsnippet
 
 context "math()"
-snippet mcal "mathcal" iA
-\mathcal{$1}$0
+snippet mbf "mathbf" iA
+\mathbf{$1}$0
 endsnippet
 
 context "math()"
@@ -176,9 +135,8 @@ snippet "f([A-Z])" "mathfrak" riA
 \mathfrak{`!p snip.rv=match.group(1)`}
 endsnippet
 
-context "math()"
-snippet mrm "mathrm" iA
-\mathrm{$1}$0
+snippet tee "emph" w
+\emph{$1} $0
 endsnippet
 
 snippet tbf "textbf" mA
@@ -187,6 +145,11 @@ endsnippet
 
 snippet tit "textit" mA
 \textit{$1}$0
+endsnippet
+
+context "math()"
+snippet mrm "mathrm" iA
+\mathrm{$1}$0
 endsnippet
 
 snippet tsl "textsl" mA
@@ -209,34 +172,18 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '\b(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
+snippet '\b(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "auto backslash" rwA
 \\`!p snip.rv = match.group(1)`
-endsnippet
-
-priority 300
-context "math()"
-snippet dint "integral" wA
-\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
 endsnippet
 
 priority 200
 context "math()"
-snippet '\b(?<!\\)(ge|le|iff|lor|land|supset|cap|cup|sqcup|deg|mid|cdot|times|lim|sqrt|arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int|to)' "ln" rwA
+snippet '\b(?<!\\)(ge|le|iff|lor|land|supset|cap|cup|sqcup|deg|mid|cdot|times|lim|sqrt|arcsin|arccos|arctan|arccot|arccsc|arcsec|int|to|sum|prod|int|sim)' "auto backslash" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
-snippet '(?<!\\)(hfill)' "ln" rwA
+snippet '(?<!\\)(hfill)' "hfill" rwA
 \\`!p snip.rv = match.group(1)`
-endsnippet
-
-context "math()"
-snippet invs "inverse" iA
-^{-1}
-endsnippet
-
-context "math()"
-snippet compl "complement" iA
-^{c}
 endsnippet
 
 context "math()"
@@ -251,7 +198,7 @@ endsnippet
 
 context "math()"
 snippet ~~ "~" iA
-\sim 
+\approx 
 endsnippet
 
 context "math()"
@@ -260,23 +207,18 @@ snippet set "set" wA
 endsnippet
 
 context "math()"
+snippet zo "zero one" wA
+\\{ 0, 1 \\}
+endsnippet
+
+context "math()"
 snippet Cup "bigcup" iA
-\bigcup_{${1:i \in ${2: I}}} $0
+\bigcup
 endsnippet
 
 context "math()"
 snippet Cap "bigcap" iA
-\bigcap_{${1:i \in ${2: I}}} $0
-endsnippet
-
-context "math()"
-snippet <! "normal" iA
-\triangleleft 
-endsnippet
-
-context "math()"
-snippet '(?<!i)sts' "text subscript" irA
-_\text{$1} $0
+\bigcap
 endsnippet
 
 context "math()"
@@ -302,7 +244,6 @@ context "math()"
 snippet "([a-zA-Z])til" "tilde" riA
 \tilde{`!p snip.rv=match.group(1)`}
 endsnippet
-
 
 priority 10
 context "math()"
