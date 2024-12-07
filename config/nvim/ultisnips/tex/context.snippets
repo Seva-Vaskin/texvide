@@ -32,6 +32,10 @@ snippet desc "Description" bA
 \end{description}
 endsnippet
 
+snippet "\b(\S+)mk" "Transform WORDmk to $WORD$" rA
+`!p snip.rv = f"${match.group(1)}$"` 
+endsnippet
+
 snippet mk "Math" wA
 $${1:${VISUAL}}$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:

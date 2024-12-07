@@ -18,11 +18,6 @@ snippet ... "ldots" iA
 \ldots
 endsnippet
 
-context "notmath()"
-snippet '\$\s*-' "~-" rmA
-\$~-
-endsnippet
-
 context "math()"
 snippet '([A-Za-z])(\d)' "auto subscript" wrA
 `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
