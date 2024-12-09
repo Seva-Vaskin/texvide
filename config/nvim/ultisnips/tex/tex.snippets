@@ -29,13 +29,13 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 context "math()"
-snippet "\\(cup|cap|bigcup|bigcap|bigwedge|bigvee|bigoplus|bigotimes|bigsqcup|biguplus)" "expand" ir
-\\`!p snip.rv = match.group(1)`_{$1} $0
+snippet "\\(cup|cap|bigcup|bigcap|bigwedge|bigvee|bigoplus|bigotimes|bigsqcup|bigsqcap|biguplus|sup)" "expand" ir
+\\`!p snip.rv = match.group(1)`_{$1}$0
 endsnippet
 
 context "math()"
 snippet "\\(sum|prod|int)" "expand" ir
-\\`!p snip.rv = match.group(1)`_{$1}^{$2} $0
+\\`!p snip.rv = match.group(1)`_{$1}^{$2}$0
 endsnippet
 
 context "math()"
@@ -173,7 +173,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '\b(?<!\\)(ge|le|iff|lor|land|supset|cap|cup|sqcup|deg|mid|cdot|times|lim|sqrt|arcsin|arccos|arctan|arccot|arccsc|arcsec|int|to|sum|prod|int|sim)' "auto backslash" rwA
+snippet '\b(?<!\\)(ge|le|iff|lor|land|supset|cap|cup|sqcup|cap|deg|mid|cdot|times|lim|sqrt|arcsin|arccos|arctan|arccot|arccsc|arcsec|int|to|sum|prod|int|sim|sup)' "auto backslash" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -192,8 +192,13 @@ snippet sem "setminus" iA
 endsnippet
 
 context "math()"
-snippet ~~ "~" iA
-\approx 
+snippet ~~ "approx" iA
+\approx
+endsnippet
+
+context "math()"
+snippet == "equiv" iA
+\equiv
 endsnippet
 
 context "math()"
@@ -207,13 +212,8 @@ snippet zo "zero one" wA
 endsnippet
 
 context "math()"
-snippet Cup "bigcup" iA
-\bigcup
-endsnippet
-
-context "math()"
-snippet Cap "bigcap" iA
-\bigcap
+snippet '\b(?<!\\)(Cap|Cup|Sqcup|Sqcap)' "Big symbols" rwA
+\\big`!p snip.rv = match.group(1).lower()`
 endsnippet
 
 context "math()"
