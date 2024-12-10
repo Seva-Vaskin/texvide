@@ -91,13 +91,23 @@ snippet '([A-Za-z]+)([A-Za-z])\2' "Transform repeated letters to underscore" rm
 endsnippet
 
 context "math()"
-snippet "\\xii" "Enable back x_i" riA
-x_i
+snippet "\\([x|p|X|P])ii" "Enable back x_i, p_i, P_i, Pi_i" riA
+`!p snip.rv = match.group(1)`_i
 endsnippet
 
 context "math()"
-snippet "x_ii" "Enable back \xi_i" riA
-\xi_i
+snippet "([x|p|X|P])_ii" "Enable back \xi_i, \pi_i, \Xi_i, \Pi_i" riA
+\\`!p snip.rv = match.group(1)`i_i
+endsnippet
+
+context "math()"
+snippet "\\pii" "Enable back p_i" riA
+p_i
+endsnippet
+
+context "math()"
+snippet "p_ii" "Enable back \pi_i" riA
+\pi_i
 endsnippet
 
 context "math()"
