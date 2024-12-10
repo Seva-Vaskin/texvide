@@ -101,16 +101,6 @@ snippet "([x|p|X|P])_ii" "Enable back \xi_i, \pi_i, \Xi_i, \Pi_i" riA
 endsnippet
 
 context "math()"
-snippet "\\pii" "Enable back p_i" riA
-p_i
-endsnippet
-
-context "math()"
-snippet "p_ii" "Enable back \pi_i" riA
-\pi_i
-endsnippet
-
-context "math()"
 snippet '([_^])([a-zA-Z])([+\-*/])(\d)' "Subscript and Exponent Operator and Number" rA
 `!p snip.rv = match.group(1) + "{" + match.group(2) + " " + match.group(3) + " " + match.group(4) + "}"`
 endsnippet
