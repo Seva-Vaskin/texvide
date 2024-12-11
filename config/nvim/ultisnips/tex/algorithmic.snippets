@@ -1,0 +1,22 @@
+global !p
+def env(name):
+	[x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+	return x != '0' and y != '0'
+endglobal
+
+context "env('algorithmic')"
+snippet proc "procedure" bA
+\Procedure{$1}{$2}
+    $3
+\EndProcedure $0
+endsnippet
+
+context "env('algorithmic')"
+snippet st "state" bA
+\State
+endsnippet
+
+context "env('algorithmic')"
+snippet ret "return" bA
+\State \textbf{return}
+endsnippet
