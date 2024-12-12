@@ -130,8 +130,8 @@ snippet "f([A-Z])" "mathfrak" riA
 \mathfrak{`!p snip.rv=match.group(1)`}
 endsnippet
 
-snippet tee "emph" w
-\emph{$1} $0
+snippet ee "Emphasize" w
+\\emph{${1:${VISUAL}}}
 endsnippet
 
 snippet tbf "textbf" mA
@@ -168,8 +168,13 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '\b(?<!\\)(ge|le|iff|lor|land|supset|cap|cup|sqcup|cap|deg|mid|cdot|times|lim|sqrt|arcsin|arccos|arctan|arccot|arccsc|arcsec|int|to|sum|prod|int|sim|sup)' "auto backslash" rwA
+snippet '\b(?<!\\)(ge|le|iff|lor|land|supset|cap|cup|sqcup|cap|deg|mid|cdot|times|lim|arcsin|arccos|arctan|arccot|arccsc|arcsec|int|to|sum|prod|int|sim|sup)' "auto backslash" rwA
 \\`!p snip.rv = match.group(1)`
+endsnippet
+
+context "math()"
+snippet sqrt "sqrt" wA
+\\sqrt{ ${1:${VISUAL}} }$0
 endsnippet
 
 snippet '(?<!\\)(hfill)' "hfill" rwA

@@ -7,6 +7,8 @@ sakls.init {
   layout_backend = 'xkb-switch',
 }
 
+---This schema assumes that 0 is the default layout (usually English),
+---and 1 is the alternative layout (other language, e.g. Russian).
 local vimtex_vimsyn_schema = {
     memorized = {
       ['texAuthorArg'] = 1,
@@ -20,6 +22,7 @@ local vimtex_vimsyn_schema = {
       ['texEnvOpt'] = 1,
       ['texMathTextConcArg'] = 1,
       ['texFootnoteArg'] = 1,
+      ['texSectionArg'] = 1,
     },
     forced = {
       -- [''] = 1,
