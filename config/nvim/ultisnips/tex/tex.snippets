@@ -29,7 +29,7 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 context "math()"
-snippet "\\(cup|cap|bigcup|bigcap|bigwedge|bigvee|bigoplus|bigotimes|bigsqcup|bigsqcap|biguplus|sup)" "expand" ir
+snippet "\\(bigcup|bigcap|bigwedge|bigvee|bigoplus|bigotimes|bigsqcup|bigsqcap|biguplus|sup|lim)" "expand" ir
 \\`!p snip.rv = match.group(1)`_{$1}$0
 endsnippet
 
