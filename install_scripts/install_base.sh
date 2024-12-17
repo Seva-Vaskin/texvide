@@ -38,3 +38,6 @@ cp -r "$PROJECT_DIR"/* "$INSTALL_DIR/"
 # Add texvide/bin to PATH
 echo "Adding $INSTALL_DIR/bin to PATH..."
 "$PROJECT_DIR/install_scripts/add_path.sh" "$INSTALL_DIR"
+
+# Fixing git
+git config --global --add safe.directory "*"
