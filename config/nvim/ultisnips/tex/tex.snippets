@@ -39,6 +39,11 @@ snippet "\\(sum|prod|int)" "expand" ir
 endsnippet
 
 context "math()"
+snippet \to "expand ->" i
+\xrightarrow[$1]{$2}$0
+endsnippet
+
+context "math()"
 snippet sr "^2" iA
 ^2
 endsnippet
