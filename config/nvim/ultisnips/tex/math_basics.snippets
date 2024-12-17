@@ -61,8 +61,19 @@ endsnippet
 
 context "math()"
 snippet = "longequal" i
-\\xlongequal{$1}$0
+`!p 
+if not t[1] or len(t[1]) <= 3:
+    snip.rv = r'\overset{'
+else:
+    snip.rv = r'\xlongequal{'
+`$1`!p
+if not t[1] or len(t[1]) <= 3:
+    snip.rv = '}{=}'
+else:
+    snip.rv = '}'
+`$0
 endsnippet
+
 
 context "math()"
 snippet := "coloneqq" iA
