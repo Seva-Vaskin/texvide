@@ -78,7 +78,7 @@ context "math()"
 snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rA
 `!p
 text = match.group(1) + match.group(2) * 2
-if text in ["coloneqq","iff", "mathbb"]:
+if text in ["coloneqq","iff", "mathbb", "bigg"]:
  snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
 else:
  snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
