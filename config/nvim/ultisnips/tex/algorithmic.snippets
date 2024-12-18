@@ -20,3 +20,51 @@ context "env('algorithmic')"
 snippet ret "return" bA
 \State \textbf{return}
 endsnippet
+
+context "env('algorithmic')"
+snippet for "for loop" bA
+\For{$1}
+    $2
+\EndFor $0
+endsnippet
+
+context "env('algorithmic')"
+snippet while "while loop" bA
+\While{$1}
+    $2
+\EndWhile $0
+endsnippet
+
+context "env('algorithmic')"
+snippet if "if statement" bA
+\If{$1}
+    $2
+\EndIf $0
+endsnippet
+
+context "env('algorithmic')"
+snippet ifelse "if-else statement" bA
+\If{$1}
+    $2
+\Else
+    $3
+\EndIf $0
+endsnippet
+
+context "env('algorithmic')"
+snippet repeat "repeat-until loop" bA
+\Repeat
+    $1
+\Until{$2} $0
+endsnippet
+
+context "env('algorithmic')"
+snippet assert "assert" bA
+\State \textbf{assert} $1
+endsnippet
+
+context "env('algorithmic')"
+snippet call "function call" bA
+\State \Call{$1}{$2} $0
+endsnippet
+
