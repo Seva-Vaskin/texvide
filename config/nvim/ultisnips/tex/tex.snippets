@@ -14,17 +14,33 @@ def env(name):
 
 def double_letter_check(match):
 	text = match.group(1) + match.group(2) * 2
-	return text not in ["coloneqq","iff", "mathbb", "bigg", "forall"]
+	return text not in ["coloneqq", "iff", "mathbb", "bigg", "forall"]
 
-def inner_env():
-	return vim.eval('vimtex#env#get_inner()')['name']
+def get_inner_env():
+	return vim.eval('vimtex#env#get_inner()').get('name', '')
+
+def tabular_env():
+	return get_inner_env() in ['pmatrix', 'cases', 'align', 'gather', 'bmatrix', 'Bmatrix', 'vmatrix', 'Vmatrix', 'array', 'matrix']
+
+def newline_post_expand():
+	prev_line = snip.buffer[snip.line - 1].strip()
+	inner_env = get_inner_env()
+	if prev_line.endswith(f"\\begin{{{inner_env}}}") or prev_line.endswith(f"\\begin{{{inner_env}*}}"):
+		pass
+	elif not prev_line.endswith(r'\\'):
+		snip.buffer[snip.line - 1] += r'\\'
+
+def auto_newline_env():
+	if not tabular_env():
+		return False
+	prev_line = snip.buffer[snip.line - 1].strip()
+	if prev_line.endswith(r'\\'):
+		return False	
+	inner_env = get_inner_env()
+	if prev_line.endswith(f"\\begin{{{inner_env}}}") or prev_line.endswith(f"\\begin{{{inner_env}*}}"):
+		return False 
+	return True
 endglobal
-
-snippet env "env" w 
-`!p 
-snip.rv = inner_env()
-`
-endsnippet
 
 priority 100
 snippet ... "ldots" iA
@@ -296,30 +312,38 @@ snippet Im "Im" iA
 \mathrm{Im}
 endsnippet
 
-context "inner_env() in ['itemize', 'enumerate']"
+context "get_inner_env() in ['itemize', 'enumerate']"
 snippet - "item" biA
 \item
 endsnippet
 
-context "inner_env() == 'description'"
+context "get_inner_env() == 'description'"
 snippet - "item" biA
 \item[$1] $0
 endsnippet
 
-context "env('align')"
+context "tabular_env()"
 snippet nl "new line" wA
 \\\\
 
 endsnippet
 
-context "env('align')"
-snippet tag "tag" wA
-\\tag{$1}$0
+context "tabular_env()"
+snippet "(\t)" "&" irA
+ & 
+endsnippet
+
+context "auto_newline_env()"
+post_expand "newline_post_expand()"
+snippet "(\S)" "auto newline" rA
+`!p
+snip.rv = match.group(1)
+`
 endsnippet
 
 context "env('align')"
-snippet tb "tab" wA
-&
+snippet tag "tag" wA
+\\tag{$1}$0
 endsnippet
 
 snippet TODO "todo" w
