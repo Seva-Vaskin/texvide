@@ -167,6 +167,11 @@ snippet abs "abs" iA
 endsnippet
 
 priority 100
+snippet "\b(\S+)abs" "Transform WORDabs to |WORD|" rA
+`!p snip.rv = f"|{match.group(1)}|"`
+endsnippet
+
+priority 100
 context "math()"
 snippet '\b(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "auto backslash" rwA
 \\`!p snip.rv = match.group(1)`
