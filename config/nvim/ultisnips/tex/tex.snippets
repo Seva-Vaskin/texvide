@@ -11,6 +11,10 @@ def comment():
 def env(name):
 	[x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
 	return x != '0' and y != '0'
+
+def double_letter_check(match):
+	text = match.group(1) + match.group(2) * 2
+	return text not in ["coloneqq","iff", "mathbb", "bigg", "forall"]
 endglobal
 
 priority 100
@@ -80,20 +84,18 @@ snippet '(?<!\\)ast' "ast" riA
 endsnippet
 
 priority -1
-context "math()"
+context "math() and double_letter_check(match)"
 snippet '([A-Za-z]+)([A-Za-z])\2([^A-Za-z])' "Transform repeated letters to underscore" rA
 `!p
-text = match.group(1) + match.group(2) * 2
-if text in ["coloneqq","iff", "mathbb", "bigg"]:
- snip.rv = match.group(1) + match.group(2) * 2 + match.group(3)
-else:
- snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
+snip.rv = match.group(1) + "_" + match.group(2) + match.group(3)
 `
 endsnippet
 
-context "math()"
-snippet '([A-Za-z]+)([A-Za-z])\2' "Transform repeated letters to underscore" rm
-`!p snip.rv = match.group(1) + "_" + match.group(2)[0]`
+context "math() and double_letter_check(match)"
+snippet '([A-Za-z]+)([A-Za-z])\2' "Transform repeated letters to underscore" r
+`!p
+snip.rv = match.group(1) + "_" + match.group(2)
+`
 endsnippet
 
 context "math()"
