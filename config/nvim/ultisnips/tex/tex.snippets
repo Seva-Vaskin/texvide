@@ -14,7 +14,7 @@ def env(name):
 
 def double_letter_check(match):
 	text = match.group(1) + match.group(2) * 2
-	return text not in ["coloneqq", "iff", "mathbb", "bigg", "forall"]
+	return text not in ["coloneqq",  "iff", "mathbb", "bigg", "forall"]
 
 def get_inner_env():
 	return vim.eval('vimtex#env#get_inner()').get('name', '')
