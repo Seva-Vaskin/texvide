@@ -15,7 +15,16 @@ def env(name):
 def double_letter_check(match):
 	text = match.group(1) + match.group(2) * 2
 	return text not in ["coloneqq","iff", "mathbb", "bigg", "forall"]
+
+def inner_env():
+	return vim.eval('vimtex#env#get_inner()')['name']
 endglobal
+
+snippet env "env" w 
+`!p 
+snip.rv = inner_env()
+`
+endsnippet
 
 priority 100
 snippet ... "ldots" iA
@@ -287,17 +296,12 @@ snippet Im "Im" iA
 \mathrm{Im}
 endsnippet
 
-context "env('itemize')"
+context "inner_env() in ['itemize', 'enumerate']"
 snippet - "item" biA
 \item
 endsnippet
 
-context "env('enumerate')"
-snippet - "item" biA
-\item
-endsnippet
-
-context "env('description')"
+context "inner_env() == 'description'"
 snippet - "item" biA
 \item[$1] $0
 endsnippet
