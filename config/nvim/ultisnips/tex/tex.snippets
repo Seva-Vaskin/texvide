@@ -14,7 +14,7 @@ def env(name):
 
 def double_letter_check(match):
 	text = match.group(1) + match.group(2) * 2
-	return text not in ["coloneqq",  "iff", "mathbb", "bigg", "forall"]
+	return text not in ["coloneqq",  "iff", "mathbb", "bigg", "forall", "vee", "bigvee"]
 
 def get_inner_env():
 	return vim.eval('vimtex#env#get_inner()').get('name', '')
@@ -250,8 +250,18 @@ snippet zo "zero one" wA
 endsnippet
 
 context "math()"
-snippet '\b(?<!\\)(Cap|Cup|Sqcup|Sqcap)' "Big symbols" rwA
+snippet '\b(?<!\\)(Cap|Cup|Sqcup|Sqcap|Vee|Wedge)' "Big symbols" rwA
 \\big`!p snip.rv = match.group(1).lower()`
+endsnippet
+
+context "math()"
+snippet Lor "bigvee alias" wA
+\\bigvee
+endsnippet
+
+context "math()"
+snippet Land "bigwedge alias" wA
+\\bigwedge
 endsnippet
 
 context "math()"
