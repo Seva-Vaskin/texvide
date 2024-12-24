@@ -37,7 +37,10 @@ def auto_newline_env():
 	if prev_line.endswith(r'\\'):
 		return False	
 	inner_env = get_inner_env()
-	if prev_line.endswith(f"\\begin{{{inner_env}}}") or prev_line.endswith(f"\\begin{{{inner_env}*}}"):
+	begin_marks = [f"\\begin{{{inner_env}}}", f"\\begin{{{inner_env}*}}"]
+	current_line = snip.buffer[snip.line]
+	if any(map(lambda x: x in current_line, begin_marks)) \
+		or any(map(lambda x: prev_line.endswith(x), begin_marks)):
 		return False 
 	return True
 endglobal
@@ -332,8 +335,8 @@ snippet - "item" biA
 \item[$1] $0
 endsnippet
 
-context "tabular_env()"
-snippet "(?<=\S)\t" "&" rA
+context "tabular_env() and snip.buffer[snip.line][:snip.column].strip() != ''"
+snippet "\t" "&" rA
  & 
 endsnippet
 
