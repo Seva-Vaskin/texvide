@@ -1,11 +1,11 @@
 
-snippet beg "begin{} / end{}" bA
+snippet "(beg|иуп)" "begin{} / end{}" brA
 \\begin{$1}
 	$0
 \\end{$1}
 endsnippet
 
-snippet fig "Figure environment" b
+snippet "(fig|ашп)" "Figure environment" br
 \begin{figure}[${1:htpb}]
 	\centering
 	${2:\includegraphics[width=0.8\textwidth]{$3}}
@@ -14,19 +14,19 @@ snippet fig "Figure environment" b
 \end{figure}
 endsnippet
 
-snippet enum "Enumerate" bA
+snippet "(enum|утгь)" "Enumerate" brA
 \begin{enumerate}
 	\item $0
 \end{enumerate}
 endsnippet
 
-snippet item "Itemize" bA
+snippet "(item|шеуь)" "Itemize" brA
 \begin{itemize}
 	\item $0
 \end{itemize}
 endsnippet
 
-snippet desc "Description" bA
+snippet "(desc|вуыс)" "Description" brA
 \begin{description}
 	\item[$1] $0
 \end{description}
@@ -38,17 +38,17 @@ snippet "\b(\S+)mk" "Transform WORDmk to $WORD$" rA
 endsnippet
 
 priority 200
-snippet mk "Math" wA
+snippet "(mk|ьл)" "Math" wrA
 $${1:${VISUAL}}$$0
 endsnippet
 
-snippet dm "Math" wA
+snippet "(dm|вь)" "Math" wrA
 \[
 ${1:${VISUAL}}
 \] $0
 endsnippet
 
-snippet ali "Align" bA
+snippet "(ali|фдш)" "Align" brA
 \begin{align*}
 	${1:${VISUAL}}
 \end{align*}
@@ -62,14 +62,14 @@ snippet bmat "bmat" iA
 \begin{bmatrix} $1 \end{bmatrix} $0
 endsnippet
 
-snippet equ "equation" bA
+snippet "(equ|уйг)" "equation" brA
 \\begin{equation}
 	$1
 	\label{eq:$2}
 \\end{equation} $0
 endsnippet
 
-snippet algo "Algorithm" bA 
+snippet "(algo|фдпщ)" "Algorithm" brA 
 \begin{algorithm}
 \caption{$1}
 \begin{algorithmic}[1]
