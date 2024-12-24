@@ -54,6 +54,7 @@ snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
 endsnippet
 
+priority 100
 context "math()"
 snippet != "not equals" iA
 \neq 
@@ -159,6 +160,13 @@ context "math()"
 snippet c= "subseteq" wA
 \subseteq 
 endsnippet
+
+priority 200
+context "math()"
+snippet c!= "subsetneq" wA
+\subsetneq 
+endsnippet
+
 
 context "math()"
 snippet notin "not in " iA
