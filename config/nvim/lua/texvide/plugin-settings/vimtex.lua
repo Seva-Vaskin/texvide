@@ -7,3 +7,14 @@ vim.g.vimtex_quickfix_mode = 0
 vim.opt.conceallevel = 1
 vim.g.tex_conceal = 'abdmg'
 vim.g.vimtex_complete_enabled = 1
+
+vim.g.vimtex_compiler_latexmk = {
+    options = {
+      '-pdf',
+      '-shell-escape',
+      '-verbose',
+      '-file-line-error',
+      '-synctex=1',
+      '-interaction=nonstopmode',
+    },
+  }
