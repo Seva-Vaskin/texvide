@@ -1,3 +1,10 @@
+global !p
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def notmath():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '0'
+endglobal
 
 snippet "(beg|иуп)" "begin{} / end{}" brA
 \\begin{$1}
@@ -32,16 +39,19 @@ snippet "(desc|вуыс)" "Description" brA
 \end{description}
 endsnippet
 
+context "notmath()"
 priority 100
 snippet "\b(\S+)mk" "Transform WORDmk to $WORD$" rA
 `!p snip.rv = f"${match.group(1)}$"`
 endsnippet
 
+context "notmath()"
 priority 200
 snippet "(mk|ьл)" "Math" wrA
 $${1:${VISUAL}}$$0
 endsnippet
 
+context "notmath()"
 snippet "(dm|вь)" "Math" wrA
 \[
 ${1:${VISUAL}}
@@ -54,14 +64,17 @@ snippet "(ali|фдш)" "Align" brA
 \end{align*}
 endsnippet
 
+context "math()"
 snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
 endsnippet
 
+context "math()"
 snippet bmat "bmat" iA
 \begin{bmatrix} $1 \end{bmatrix} $0
 endsnippet
 
+context "notmath()"
 snippet "(equ|уйг)" "equation" brA
 \\begin{equation}
 	$1
