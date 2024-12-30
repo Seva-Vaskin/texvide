@@ -289,7 +289,12 @@ endsnippet
 priority 10
 context "math()"
 snippet bar "bar" wA
-\overline{$1}$0
+`!p 
+if not t[1] or len(t[1]) <= 1:
+    snip.rv = r'\bar{'
+else:
+    snip.rv = r'\overline{'
+`$1}$0
 endsnippet
 
 priority 100
