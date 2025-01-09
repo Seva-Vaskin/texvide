@@ -123,7 +123,8 @@ RUN pip3 install --upgrade pip \
         pynvim \
         neovim-remote \
         inkscape-figures \
-        xlib
+        xlib \
+        Pygments
 ENV PATH=${HOME}/.local/bin/:${PATH}
 
 # Set environment variables required by neovim-remote
@@ -135,9 +136,9 @@ RUN git clone https://github.com/gillescastel/inkscape-shortcut-manager.git $HOM
 # Manually download and install Russian spell files for Vim
 RUN mkdir -p $HOME/.local/share/nvim/site/spell \
     && curl -fLo $HOME/.local/share/nvim/site/spell/ru.utf-8.spl \
-        http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl \
+        https://ftp.nluug.nl/pub/vim/runtime/spell/ru.utf-8.spl \
     && curl -fLo $HOME/.local/share/nvim/site/spell/ru.utf-8.sug \
-        http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug
+        https://ftp.nluug.nl/pub/vim/runtime/spell/ru.utf-8.sug
 
 # Install Vim-Plug
 RUN mkdir -p $HOME/.local/share/nvim/site/autoload
