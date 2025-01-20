@@ -157,6 +157,11 @@ snippet mbf "mathbf" iA
 endsnippet
 
 context "math()"
+snippet "t([A-Z])" "tilde" riA
+\tilde{`!p snip.rv=match.group(1)`}
+endsnippet
+
+context "math()"
 snippet "c([A-Z])" "mathcal" riA
 \mathcal{`!p snip.rv=match.group(1)`}
 endsnippet
