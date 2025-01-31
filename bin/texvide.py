@@ -25,6 +25,7 @@ class TexVIDELauncher:
             f"--volume={os.path.expanduser('~')}:/userdata",
             f"--volume={os.path.expanduser('~')}/.local/state/nvim:/home/user/.local/state/nvim",
             f"--volume={self.project_root}/config/:/home/user/.config",
+            f"--volume={os.path.expanduser('~')}/.config/texvide:/home/user/.config/texvide",
             f"--volume={os.path.expanduser('~')}/.ssh:/home/user/.ssh",
             f"--volume={os.path.expanduser('~')}/.gitconfig:/home/user/.gitconfig",
         ]
