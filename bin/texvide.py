@@ -10,7 +10,7 @@ from pathlib import Path
 OSX_GUI_PORT = 8080
 
 class TexVIDELauncher:
-    def __init__(self, log_file=None):
+    def __init__(self, log_file=None, file=None):
         self.host_os = platform.system()
         self.docker_process = None
         self.xpra_process = None
@@ -28,6 +28,22 @@ class TexVIDELauncher:
             f"--volume={os.path.expanduser('~')}/.ssh:/home/user/.ssh",
             f"--volume={os.path.expanduser('~')}/.gitconfig:/home/user/.gitconfig",
         ]
+
+        if file:
+            # Convert to absolute path and make sure it exists
+            file_path = os.path.abspath(file)
+            if not os.path.exists(file_path):
+                print(f"Error: File {file_path} does not exist")
+                sys.exit(1)
+                
+            # Convert the path from host system to container path
+            home_dir = os.path.expanduser('~')
+            if file_path.startswith(home_dir):
+                container_path = file_path.replace(home_dir, '/userdata', 1)
+                self.common_docker_args.extend(["--env", f"OPEN_FILE={container_path}"])
+            else:
+                print(f"Error: File must be in your home directory to be accessible in the container")
+                sys.exit(1)
 
         self.linux_docker_args = [
             f"--env=DISPLAY={os.environ.get('DISPLAY')}",
@@ -176,24 +192,7 @@ def main():
     parser.add_argument('file', nargs='?', type=str, help='File to open')
     args = parser.parse_args()
 
-    launcher = TexVIDELauncher(log_file=args.log)
-    if args.file:
-        # Convert to absolute path and make sure it exists
-        file_path = os.path.abspath(args.file)
-        if not os.path.exists(file_path):
-            print(f"Error: File {file_path} does not exist")
-            sys.exit(1)
-            
-        # Convert the path from host system to container path
-        home_dir = os.path.expanduser('~')
-        if file_path.startswith(home_dir):
-            container_path = file_path.replace(home_dir, '/userdata', 1)
-        else:
-            print(f"Error: File must be in your home directory to be accessible in the container")
-            sys.exit(1)
-            
-        # Add the container path to docker args
-        launcher.common_docker_args.extend(["--env", f"OPEN_FILE={container_path}"])
+    launcher = TexVIDELauncher(file=args.file, log_file=args.log)
     sys.exit(launcher.run())
 
 if __name__ == "__main__":
