@@ -173,9 +173,27 @@ class TexVIDELauncher:
 def main():
     parser = argparse.ArgumentParser(description='TexVIDE Launcher')
     parser.add_argument('--log', type=str, help='Path to log file')
+    parser.add_argument('file', nargs='?', type=str, help='File to open')
     args = parser.parse_args()
 
     launcher = TexVIDELauncher(log_file=args.log)
+    if args.file:
+        # Convert to absolute path and make sure it exists
+        file_path = os.path.abspath(args.file)
+        if not os.path.exists(file_path):
+            print(f"Error: File {file_path} does not exist")
+            sys.exit(1)
+            
+        # Convert the path from host system to container path
+        home_dir = os.path.expanduser('~')
+        if file_path.startswith(home_dir):
+            container_path = file_path.replace(home_dir, '/userdata', 1)
+        else:
+            print(f"Error: File must be in your home directory to be accessible in the container")
+            sys.exit(1)
+            
+        # Add the container path to docker args
+        launcher.common_docker_args.extend(["--env", f"OPEN_FILE={container_path}"])
     sys.exit(launcher.run())
 
 if __name__ == "__main__":
