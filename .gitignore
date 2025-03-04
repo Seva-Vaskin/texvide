@@ -5,3 +5,4 @@ config/inkscape-figures/template.svg
 config/inkscape/*
 config/xpra
 
+.DS_Store
